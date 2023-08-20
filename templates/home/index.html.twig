@@ -1,13 +1,23 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}GUNPLA SHOP | {{ title }}{% endblock %}
-
 {% block body %}
 <main>
     <section id="latest_product">
         <h2>Nouveautés!</h2>
         <h3>Nos derniers arrivages</h3>
-        <ul></ul>
+        <ul>
+            {% for latestProduct in latestProducts %}
+                <li>
+                    <header></header>
+                    <a>{{ latestProduct.reference }}</a>
+                    <p>{{ latestProduct.description }}</p>
+                    <footer>
+                        <p>{{ latestProduct.sellPrice }}</p>
+                        <a href="#">Ajouter au panier</a>
+                    </footer>
+                </li>
+            {% endfor %}
+        </ul>
     </section>
 </main>
 {% endblock %}
