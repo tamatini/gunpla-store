@@ -25,15 +25,15 @@ class ProductRepository extends ServiceEntityRepository
     /**
      * @param $slug
      * @return Product|null Returns a single product depending on slug
-     * @throws Exception
      */
     public function findBySlug($slug) : ?Product
     {
-        $request = "SELECT * FROM product WHERE slug = :slug";
-        $conn = $this->getEntityManager()->getConnection();
-        $stmt = $conn->prepare($request);
-        $result = $stmt->executeQuery(['slug' => $slug]);
-        return $result->fetchOne();
+        return $this->createQueryBuilder("p")
+            ->from("Product", "p")
+            ->where("p.slug = :slug")
+            ->setParameter('slug', $slug)
+            ->getQuery()
+            ->getResult();
     }
 
     /**

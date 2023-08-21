@@ -27,9 +27,7 @@ class ProductController extends AbstractController
         EntityManagerInterface $entityManager,
     ): Response
     {
-        $product = $entityManager
-            ->getRepository(Product::class)
-            ->findAll();
+        $product = $entityManager->getRepository(Product::class)->findAll();
         return $this->render('product/index.html.twig', [
             'controller_name' => $product,
         ]);
@@ -38,7 +36,6 @@ class ProductController extends AbstractController
 
     /**
      * @param EntityManagerInterface $entityManager
-     * @param Product $product
      * @param string $message
      * @param string $slug
      * @return Response return the product detail page
@@ -46,18 +43,11 @@ class ProductController extends AbstractController
     #[Route('/detail/{slug}', name: 'detail')]
     public function product_detail(
         EntityManagerInterface $entityManager,
-        Product $product,
         string $message,
         string $slug
     ): Response
     {
-        try {
-            $product = $entityManager
-                -> getRepository(Product::class)
-                -> findBySlug($slug);
-        } catch (Exception $e) {
-            $message = "Ce produit n'existe pas";
-        }
+        $product = $entityManager->getRepository(Product::class)-> findBySlug($slug);
         return $this -> render('product/detail.html.twig', [
             'product' => $product,
             'message' => $message
