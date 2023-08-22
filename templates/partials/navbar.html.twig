@@ -1,0 +1,11 @@
+<nav>
+    <a href="{{ path('home_index') }}">GUNPLA SHOP</a>
+    <a href="{{ path('home_index') }}">Accueil</a>
+    {% if(is_granted("ROLE_USER")) %}
+        <a href="#">Se déconnecter</a>
+        {{ app.user.shoppingCart.cartItem.count }}
+    {% else %}
+        <a href="{{ path('user_login') }}">Se connecter</a>
+        <a href="{{ path('user_register') }}">Créer un compte</a>
+    {% endif %}
+</nav>

@@ -3,6 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\CartItem;
+use App\Entity\Product;
+use App\Entity\ShoppingCart;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -21,6 +24,16 @@ class CartItemRepository extends ServiceEntityRepository
         parent::__construct($registry, CartItem::class);
     }
 
+    public function findShoppingCartAndProduct(ShoppingCart $shoppingCart, Product $product ) : ?ShoppingCart
+    {
+        return $this->createQueryBuilder('c')
+            ->where('c.shoppingCart.id = :shoppingCartId')
+            ->andWhere('c.product.id = :productId')
+            ->setParameter('shoppingCartId', $shoppingCart->getId())
+            ->setParameter('productId', $product->getId())
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
 //    /**
 //     * @return CartItem[] Returns an array of CartItem objects
 //     */

@@ -14,15 +14,12 @@ use PHPUnit\Framework\TestCase;
 
 class CartItemTest extends TestCase
 {
-    private Product $product;
     private CartItem $cartItem;
-    private ShoppingCart $shoppingCart;
-    private User $user;
 
     protected function setUp(): void
     {
         // Create product
-        $product = $this->product = new Product();
+        $product = new Product();
         $product -> setReference("re-zel");
         $product -> setSlug("re-zel");
         $product -> setDescription("Retrouver le Re-zel de la série Mobile Suit Gundam UC et revivez les meilleurs moment \n
@@ -40,29 +37,15 @@ class CartItemTest extends TestCase
         $product -> setSellPrice(36.14);
         $product -> setStock(20);
 
-        $this->productRepository = $this->createMock(ProductRepository::class);
-        $this->productRepository->expects($this->any())
-            ->method('findBySlug')
-            ->willReturn($product);
-
         // Create user
-        $user = $this->user = new User();
+        $user = new User();
         $user->setUsername("johnDoe");
         $user->setPassword("password");
 
-        $this->userRepository = $this->createMock(UserRepository::class);
-        $this->userRepository->expects($this->any())
-            ->method('find')
-            ->willReturn($user);
-
         // Create shopping cart
-        $shoppingCart = $this->shoppingCart = new ShoppingCart();
+        $shoppingCart = new ShoppingCart();
         $shoppingCart->setUser($user);
 
-        $this->shoppingCartRepository = $this->createMock(ShoppingCartRepository::class);
-        $this->productRepository->expects($this->any())
-            ->method('find')
-            ->willReturn($shoppingCart);
 
         // Add item to cart
         $cartItem = $this->cartItem = new CartItem();

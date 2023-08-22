@@ -10,6 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: ShoppingCartRepository::class)]
 class ShoppingCart
 {
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -21,7 +22,7 @@ class ShoppingCart
     #[ORM\OneToOne(inversedBy: 'shoppingCart', cascade: ['persist', 'remove'])]
     private ?User $user = null;
 
-    #[ORM\Column]
+    #[ORM\Column(options: ["default"=>0.00])]
     private ?float $total = null;
 
     #[ORM\Column]
@@ -33,6 +34,8 @@ class ShoppingCart
     public function __construct()
     {
         $this->cartItem = new ArrayCollection();
+        $this->createdAt = new \DateTimeImmutable();
+        $this->setTotal(0.00);
     }
 
     public function getId(): ?int

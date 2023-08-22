@@ -5,9 +5,11 @@ namespace App\Controller;
 use App\Entity\CartItem;
 use App\Entity\Product;
 use App\Entity\ShoppingCart;
+use App\Entity\User;
 use App\Form\ProductType;
 use Doctrine\DBAL\Exception;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\NonUniqueResultException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -27,9 +29,10 @@ class ProductController extends AbstractController
         EntityManagerInterface $entityManager,
     ): Response
     {
-        $product = $entityManager->getRepository(Product::class)->findAll();
+        $products = $entityManager->getRepository(Product::class)->findAll();
         return $this->render('product/index.html.twig', [
-            'controller_name' => $product,
+            'title' => "Tous les produits",
+            'products' => $products,
         ]);
     }
 
@@ -49,6 +52,7 @@ class ProductController extends AbstractController
     {
         $product = $entityManager->getRepository(Product::class)-> findBySlug($slug);
         return $this -> render('product/detail.html.twig', [
+            'title' => $product->getReference(),
             'product' => $product,
             'message' => $message
         ]);
@@ -86,7 +90,7 @@ class ProductController extends AbstractController
      * @param string $slug
      * @param Request $request
      * @return Response add product to shopping cart and return to the current position
-     * @throws Exception
+     * @throws NonUniqueResultException
      */
     #[Route('/add_to_cart/{slug}')]
     public function add_to_cart(
@@ -94,9 +98,12 @@ class ProductController extends AbstractController
         string $slug,
         Request $request
     ) : Response {
+        /** @var User $user */
         $product = $entityManager -> getRepository(Product::class) -> findBySlug($slug);
         $cartItem = new CartItem();
         $currentPosition = $this -> redirect($request->getUri());
+        $user = $this->getUser();
+        $userShoppingCart = $user->getShoppingCart();
 
         if ($product->getStock() === 0) {
             $this->addFlash(
@@ -106,13 +113,23 @@ class ProductController extends AbstractController
             return $currentPosition;
         }
 
-        /** @var ShoppingCart $shoppingCart */
-        $shoppingCart = $this -> getUser() -> getShoppingCart();
+        // Create new cart if cart does not exist
+        if ($userShoppingCart === null) {
+            $userShoppingCart = $user->setShoppingCart(new ShoppingCart());
+            $entityManager->persist($userShoppingCart);
+            $entityManager->flush();
+        }
+
+        // Get shopping cart
+        $shoppingCart = $entityManager->getRepository(ShoppingCart::class)
+            ->findById($userShoppingCart->getId());
 
         // Adding product to cartItem
         $cartItem -> addProduct($product);
         $cartItem -> setQuantity(1);
-
+        $entityManager->persist($cartItem);
+        dd($cartItem);
+        // Check if product still in stock
         if ($product->getStock() < $cartItem->getQuantity()) {
             $this -> addFlash(
                 "error",
@@ -122,12 +139,23 @@ class ProductController extends AbstractController
             return $currentPosition;
         }
 
-        // Adding cartItem to shoppingCart
-        $shoppingCart -> addCartItem($cartItem);
+        $updateQuantity = $shoppingCart->getCartItem();
+        // Check if item in cart
+        if ($product === $cartItem->getProduct()) {
+
+        } else {
+            // Adding cartItem to shoppingCart
+            $shoppingCart->addCartItem($cartItem);
+            $entityManager->persist($shoppingCart);
+        }
+
+
         $this -> addFlash(
             "success",
             "Le produit " . $product->getReference() . "à bien été ajouter au panier"
         );
-        return $currentPosition;
+        $entityManager->flush();
+        return $this->redirectToRoute('home_index');
     }
+
 }

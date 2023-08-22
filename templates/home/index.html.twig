@@ -2,18 +2,23 @@
 
 {% block body %}
 <main>
+    <!-- Latest product section -->
     <section id="latest_product">
-        <h2>Nouveautés!</h2>
+        <h2 class="text-4xl">Nouveautés!</h2>
         <h3>Nos derniers arrivages</h3>
+
+        <!-- Card deck -->
         <ul>
             {% for latestProduct in latestProducts %}
-                <li>
+                <!-- Card -->
+                <li class="bg-white max-w-2xl">
                     <header></header>
                     <a>{{ latestProduct.reference }}</a>
                     <p>{{ latestProduct.description }}</p>
                     <footer>
                         <p>{{ latestProduct.sellPrice }}</p>
-                        <a href="#">Ajouter au panier</a>
+                        <a href="{% if is_granted("ROLE_USER") %}{{ path('product_app_product_add_to_cart', {'slug': latestProduct.slug})  }}
+                                 {% else %}{{ path('home_index') }}{% endif %}">Ajouter au panier</a>
                     </footer>
                 </li>
             {% endfor %}

@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Product;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\DBAL\Exception;
+use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -25,15 +26,15 @@ class ProductRepository extends ServiceEntityRepository
     /**
      * @param $slug
      * @return Product|null Returns a single product depending on slug
+     * @throws NonUniqueResultException
      */
     public function findBySlug($slug) : ?Product
     {
         return $this->createQueryBuilder("p")
-            ->from("Product", "p")
             ->where("p.slug = :slug")
             ->setParameter('slug', $slug)
             ->getQuery()
-            ->getResult();
+            ->getOneOrNullResult();
     }
 
     /**
@@ -50,14 +51,13 @@ class ProductRepository extends ServiceEntityRepository
 
     /**
      * @return Product[] Returns an array of latest products
-     * @throws Exception
      */
     public function findLatestProduct() : array
     {
-        $request = "SELECT * FROM product ORDER BY created_at DESC LIMIT 5";
-        $conn = $this->getEntityManager()->getConnection();
-        $stmt = $conn->prepare($request);
-        $result = $stmt->executeQuery();
-        return $result->fetchAllAssociative();
+        return $this->createQueryBuilder("p")
+            ->orderBy("p.createdAt", "DESC")
+            ->setMaxResults(5)
+            ->getQuery()
+            ->getResult();
     }
 }
