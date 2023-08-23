@@ -15,8 +15,8 @@ class CartItem
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToMany(targetEntity: Product::class)]
-    private Collection $product;
+    #[ORM\ManyToOne(targetEntity: Product::class)]
+    private ?Product $product;
 
     #[ORM\Column]
     private ?int $quantity = null;
@@ -33,7 +33,7 @@ class CartItem
 
     public function __construct()
     {
-        $this->product = new ArrayCollection();
+        //$this->product = new ArrayCollection();
         $this->createdAt = new \DateTimeImmutable();
     }
 
@@ -42,26 +42,17 @@ class CartItem
         return $this->id;
     }
 
-    /**
-     * @return Collection<int, Product>
-     */
-    public function getProduct(): Collection
+    //**
+     //* @return Collection<int, Product>
+     //*/
+    public function getProduct(): ?Product
     {
         return $this->product;
     }
 
-    public function addProduct(Product $product): static
+    public function setProduct(Product $product): static
     {
-        if (!$this->product->contains($product)) {
-            $this->product->add($product);
-        }
-
-        return $this;
-    }
-
-    public function removeProduct(Product $product): static
-    {
-        $this->product->removeElement($product);
+        $this->product = $product;
 
         return $this;
     }

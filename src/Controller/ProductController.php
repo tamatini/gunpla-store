@@ -99,11 +99,12 @@ class ProductController extends AbstractController
         Request $request
     ) : Response {
         /** @var User $user */
+        $user = $this->getUser();
+
         $product = $entityManager -> getRepository(Product::class) -> findBySlug($slug);
+        $userShoppingCart = $user->getShoppingCart();
         $cartItem = new CartItem();
         $currentPosition = $this -> redirect($request->getUri());
-        $user = $this->getUser();
-        $userShoppingCart = $user->getShoppingCart();
 
         if ($product->getStock() === 0) {
             $this->addFlash(
@@ -124,11 +125,6 @@ class ProductController extends AbstractController
         $shoppingCart = $entityManager->getRepository(ShoppingCart::class)
             ->findById($userShoppingCart->getId());
 
-        // Adding product to cartItem
-        $cartItem -> addProduct($product);
-        $cartItem -> setQuantity(1);
-        $entityManager->persist($cartItem);
-        dd($cartItem);
         // Check if product still in stock
         if ($product->getStock() < $cartItem->getQuantity()) {
             $this -> addFlash(
@@ -139,21 +135,28 @@ class ProductController extends AbstractController
             return $currentPosition;
         }
 
-        $updateQuantity = $shoppingCart->getCartItem();
-        // Check if item in cart
-        if ($product === $cartItem->getProduct()) {
+        $currentItem = $entityManager->getRepository(CartItem::class)
+            ->findOneBy(['shoppingCart' => $shoppingCart, 'product' => $product]);
 
+        if ($currentItem != null ) {
+            $currentItem
+                ->setQuantity($currentItem->getQuantity()+1)
+                ->setUpdatedAt(new \DateTimeImmutable());
+            $entityManager->persist($currentItem);
         } else {
-            // Adding cartItem to shoppingCart
+            $cartItem
+                -> setProduct($product)
+                -> setQuantity(1);
             $shoppingCart->addCartItem($cartItem);
-            $entityManager->persist($shoppingCart);
+            $entityManager->persist($cartItem);
         }
-
 
         $this -> addFlash(
             "success",
             "Le produit " . $product->getReference() . "à bien été ajouter au panier"
         );
+
+        $entityManager->persist($shoppingCart);
         $entityManager->flush();
         return $this->redirectToRoute('home_index');
     }
