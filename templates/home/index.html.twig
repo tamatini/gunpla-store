@@ -3,23 +3,36 @@
 {% block body %}
 <main>
     <!-- Latest product section -->
-    <section id="latest_product">
-        <h2 class="text-4xl">Nouveautés!</h2>
-        <h3>Nos derniers arrivages</h3>
+    <section id="latest_product" class="bg-gundam-blue">
+        <!-- section header -->
+        <header class="section-title">
+            <h2>Nouveautés!</h2>
+            <a href="{{ path('product_index') }}">Nos derniers arrivages > </a>
+        </header>
 
         <!-- Card deck -->
-        <ul>
+        <ul class="deck">
             {% for latestProduct in latestProducts %}
                 <!-- Card -->
-                <li class="bg-white max-w-2xl">
-                    <header></header>
-                    <a>{{ latestProduct.reference }}</a>
-                    <p>{{ latestProduct.description }}</p>
-                    <footer>
-                        <p>{{ latestProduct.sellPrice }}</p>
-                        <a href="{% if is_granted("ROLE_USER") %}{{ path('product_app_product_add_to_cart', {'slug': latestProduct.slug})  }}
-                                 {% else %}{{ path('home_index') }}{% endif %}">Ajouter au panier</a>
-                    </footer>
+                <li class="card-product">
+                    <section class="card-product-content">
+                        <header></header>
+                        <a class="card-product-content-title">{{ latestProduct.reference }}</a>
+                        <footer>
+                            <p class="card-product-price">{{ latestProduct.sellPrice | number_format(2, '.') }} €</p>
+                            {% if latestProduct.stock != 0 %}
+                                <a class="card-product-add-cart" href="
+                                    {% if is_granted('ROLE_USER') %}
+                                        {{ path('product_app_product_add_to_cart', {'slug': latestProduct.slug})  }}
+                                    {% else %}
+                                        {{ path('user_login') }}
+                                    {% endif %}
+                                    ">Ajouter au panier</a>
+                            {% else %}
+                                <a class="card-product-add-cart-disabled" >Rupture de stock</a>
+                            {% endif %}
+                        </footer>
+                    </section>
                 </li>
             {% endfor %}
         </ul>

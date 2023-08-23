@@ -2,6 +2,67 @@
 @tailwind components;
 @tailwind utilities;
 
+* {
+    font-family: 'Plavsky', sans-serif;
+    @apply tracking-widest
+}
+
 body {
     background-color: lightgray;
 }
+
+@font-face {
+    font-family: 'Plavsky';
+    src: url("../fonts/Plavsky.otf") format("truetype");
+    font-weight: 400;
+    font-style: normal;
+}
+
+section {
+    @apply py-5
+}
+
+.section-title {
+    @apply w-4/6 mx-auto;
+}
+
+.section-title h2 {
+    @apply text-gundam-white font-extrabold uppercase text-5xl
+}
+
+.section-title a {
+    @apply text-xl text-gundam-yellow underline block mt-1
+    mb-8 hover:text-gundam-red
+}
+
+.deck {
+    @apply grid grid-cols-5 w-4/6 mx-auto gap-2;
+}
+
+.card-product {
+    @apply bg-gundam-white;
+}
+
+.card-product-content {
+    @apply p-2;
+}
+
+.card-product-content-title {
+    @apply text-xl uppercase font-bold;
+}
+
+.card-product-price {
+    @apply text-3xl font-bold mt-2 text-gundam-red;
+}
+
+.card-product-add-cart {
+    @apply text-center bg-gundam-blue text-gundam-white
+    block text-lg p-2 mt-4 hover:bg-gundam-red hover:text-gundam-yellow
+}
+
+.card-product-add-cart-disabled {
+    @apply text-center bg-gundam-grey text-gundam-white
+    block text-lg p-2 mt-4 cursor-not-allowed
+}
+
+

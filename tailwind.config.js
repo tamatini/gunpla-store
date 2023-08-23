@@ -5,8 +5,15 @@ module.exports = {
       "./templates/**/*.html.twig"
   ],
   theme: {
-    extend: {},
+      colors: {
+          'gundam-white': '#ffffff',
+          'gundam-red': '#fb2f38',
+          'gundam-blue': '#2c52b3',
+          'gundam-grey': '#5a5b6d',
+          'gundam-yellow': '#fff867'
+      },
+      extend: {},
   },
-  plugins: [],
+    plugins: [],
 }
 
