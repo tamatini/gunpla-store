@@ -1,11 +1,58 @@
-<nav>
-    <a href="{{ path('home_index') }}">GUNPLA SHOP</a>
-    <a href="{{ path('home_index') }}">Accueil</a>
-    {% if(is_granted("ROLE_USER")) %}
-        <a href="#">Se déconnecter</a>
-        {{ app.user.shoppingCart.cartItem.count }}
-    {% else %}
-        <a href="{{ path('user_login') }}">Se connecter</a>
-        <a href="{{ path('user_register') }}">Créer un compte</a>
-    {% endif %}
+<nav class="navbar">
+    <a class="nav-logo" href="{{ path('home_index') }}">
+        <img class="w-10" src="{{ asset('images/gundam-head.png') }}" alt="gundam head icon">
+        <span>GUNPLA SHOP</span>
+    </a>
+    <ul class="nav-list">
+        <li><a class="navlink" href="{{ path('home_index') }}">Accueil</a></li>
+        <li class="group sub-menu-group">
+            <button class="nav-menu-icon pr-2 ">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+            </button>
+            <ul class="nav-submenu">
+                {% if(is_granted("ROLE_USER")) %}
+                    <li class="sub-nav"><a class="sub-navlink" href="#">Se déconnecter</a></li>
+                {% else %}
+                    <li class="sub-nav">
+                        <a class="sub-navlink" href="{{ path('user_login') }}">Se connecter</a>
+                    </li>
+                    <li class="sub-nav">
+                        <a class="sub-navlink" href="{{ path('user_register') }}">Créer un compte</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </li>
+        <li class="group sub-menu-group">
+            <button class="nav-menu-icon relative">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007zM8.625 10.5a.375.375 0 11-.75 0 .375.375 0 01.75 0zm7.5 0a.375.375 0 11-.75 0 .375.375 0 01.75 0z" />
+                </svg>
+                <span class="nav-menu-icon-qty">{{ app.user.shoppingCart.cartItem.count }}</span>
+            </button>
+            <ul class="nav-submenu">
+                {% for cartItemProduct in app.user.shoppingCart.cartItem %}
+                    <li class="nav-cart-item">
+                        <h4>{{ cartItemProduct.product.reference }}</h4>
+                        <ul>
+                            <li>Quantité : {{ cartItemProduct.quantity }}</li>
+                            <li>Prix : {{ cartItemProduct.product.sellPrice | number_format(2, '.') }} €</li>
+                        </ul>
+                    </li>
+                {% endfor %}
+                <li class="w-full px-2 py-4 bg-gundam-grey text-gundam-yellow">
+                    <dl class="w-full">
+                        <dd class="w-full flex justify-between">
+                            <span>Sous-total</span>
+                            <span>{{ app.user.shoppingCart.total | number_format(2, '.')  }} €</span>
+                        </dd>
+                        <dt class="text-xs text-left mt-1">Hors livraison et hors avantages</dt>
+                    </dl>
+
+                </li>
+            </ul>
+        </li>
+
+    </ul>
 </nav>

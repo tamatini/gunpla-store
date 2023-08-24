@@ -1,11 +1,22 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    {{ form_start(register_form) }}
-        {{ form_widget(register_form) }}
+    {{ form_start(register_form, {'attr': {'class': 'form'}}) }}
+        <h1>Créer mon compte</h1>
+        <label for="{{ field_name(register_form.username) }}">Nom d'utilisateur</label>
+        <input type="text" id="{{ field_name(register_form.username) }}" name="{{ field_name(register_form.username) }}">
+        <label for="{{ field_name(register_form.password) }}">Mot de passe</label>
+        <input type="password" id="{{ field_name(register_form.password) }}" name="{{ field_name(register_form.password) }}">
+        <label for="{{ field_name(register_form.firstname) }}">Prénom</label>
+        <input type="text" id="{{ field_name(register_form.firstname) }}" name="{{ field_name(register_form.firstname) }}">
+        <label for="{{ field_name(register_form.lastname) }}">Nom</label>
+        <input type="text" id="{{ field_name(register_form.lastname) }}" name="{{ field_name(register_form.lastname) }}">
+        <label for="{{ field_name(register_form.phoneNumber) }}">Téléphone</label>
+        <input type="tel" id="{{ field_name(register_form.phoneNumber) }}" name="{{ field_name(register_form.phoneNumber) }}">
+        <label for="{{ field_name(register_form.email) }}">E-mail</label>
+        <input type="email" id="{{ field_name(register_form.email) }}" name="{{ field_name(register_form.email) }}">
         <input type="submit" value="submit">
     {{ form_end(register_form) }}
-
 {% endblock %}
 
 

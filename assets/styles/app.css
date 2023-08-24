@@ -65,4 +65,89 @@ section {
     block text-lg p-2 mt-4 cursor-not-allowed
 }
 
+.nav {
+    @apply w-full bg-gundam-white h-16 shadow-2xl
+}
 
+.navbar {
+    @apply w-4/6 text-center flex-row flex mx-auto justify-between h-full;
+}
+
+.navlink {
+    @apply inline-block px-2 hover:underline text-gundam-red;
+}
+
+.nav-logo {
+    @apply font-bold text-2xl pl-0 text-gundam-red my-auto flex flex-row;
+}
+
+.nav-list {
+    @apply flex-row flex items-center;
+}
+
+.nav-submenu {
+    @apply bg-gundam-white transform scale-0 group-hover:scale-100 absolute mt-2
+    transition duration-150 ease-in-out origin-top shadow-2xl border-t-2 border-t-gundam-red;
+}
+
+.sub-menu-group {
+    @apply inline-block;
+}
+
+.sub-navlink {
+    @apply text-left py-4 text-sm;
+}
+
+.sub-nav {
+    @apply text-left py-3 px-2 hover:text-gundam-yellow hover:underline hover:bg-gundam-red
+    hover:transition duration-75 ease-in-out;
+}
+
+.nav-menu-icon {
+    @apply my-auto text-gundam-red;
+}
+
+.nav-menu-icon-qty {
+    @apply text-xs absolute top-2 left-4 bg-gundam-red p-1 px-1.5 text-gundam-yellow rounded-full;
+}
+
+.nav-cart-item {
+    @apply text-left py-3 px-2 w-72;
+}
+
+.nav-cart-item h4 {
+    @apply font-bold text-gundam-red uppercase text-sm;
+}
+
+.nav-cart-item ul li {
+    @apply text-sm
+}
+
+.form {
+    @apply bg-gundam-white w-1/4 grid mx-auto mt-32 shadow-2xl
+    rounded-md overflow-hidden pb-10;
+}
+
+.form h1 {
+    @apply text-4xl text-center py-8 bg-gundam-blue text-gundam-white;
+}
+
+.form label {
+    @apply mt-5 mb-3 text-xl font-bold text-gundam-blue mx-5
+}
+
+.form input[type=text], input[type=password], input[type=tel], input[type=email] {
+    @apply pl-4 h-10 hover:border-b-2 text-gundam-blue
+    hover:border-gundam-blue bg-gundam-yellow mx-5
+}
+
+.form input[type=submit] {
+    @apply mt-10 bg-gundam-red py-3 text-gundam-yellow mx-5
+    text-lg hover:bg-gundam-blue hover:text-gundam-white hover:cursor-pointer
+    hover:transition duration-150 ease-in-out
+}
+
+.register-link {
+    @apply mx-5 text-gundam-red underline text-right
+    hover:cursor-pointer mt-3 hover:text-gundam-blue
+}

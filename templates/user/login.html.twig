@@ -4,14 +4,16 @@
     {% if error %}
         <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
     {% endif %}
-    <form action="{{ path('user_login') }}" method="post">
+    <form class="form" action="{{ path('user_login') }}" method="post">
+        <h1>Se Connecter</h1>
         <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
         <label for="username">Nom d'utilisateur</label>
         <input type="text" id="username" name="_username" value="{{ last_username }}">
 
         <label for="password">Mot de passe</label>
         <input type="password" id="password" name="_password">
-        <input type="submit" value="Log In">
+        <input type="submit" value="Valider">
+        <a class="register-link" href="{{ path('user_register') }}">Je n'ai pas de compte</a>
     </form>
 {% endblock %}
 
