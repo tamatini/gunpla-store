@@ -23,11 +23,10 @@
                             {% if latestProduct.stock != 0 %}
                                 <a class="card-product-add-cart" href="
                                     {% if is_granted('ROLE_USER') %}
-                                        {{ path('product_app_product_add_to_cart', {'slug': latestProduct.slug})  }}
+                                        {{ path('product_add_to_cart', {'slug': latestProduct.slug})  }}
                                     {% else %}
                                         {{ path('user_login') }}
-                                    {% endif %}
-                                    ">Ajouter au panier</a>
+                                    {% endif %}">Ajouter au panier</a>
                             {% else %}
                                 <a class="card-product-add-cart-disabled" >Rupture de stock</a>
                             {% endif %}

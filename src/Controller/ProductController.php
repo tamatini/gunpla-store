@@ -92,7 +92,7 @@ class ProductController extends AbstractController
      * @return Response add product to shopping cart and return to the current position
      * @throws NonUniqueResultException
      */
-    #[Route('/add_to_cart/{slug}')]
+    #[Route('/add_to_cart/{slug}', name: 'add_to_cart')]
     public function add_to_cart(
         EntityManagerInterface $entityManager,
         string $slug,
