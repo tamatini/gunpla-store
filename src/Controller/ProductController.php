@@ -25,7 +25,7 @@ class ProductController extends AbstractController
      * @throws Exception
      */
     #[Route('/', name: 'index')]
-    public function product_index(
+    public function productIndex(
         EntityManagerInterface $entityManager,
     ): Response
     {
@@ -42,9 +42,10 @@ class ProductController extends AbstractController
      * @param string $message
      * @param string $slug
      * @return Response return the product detail page
+     * @throws NonUniqueResultException
      */
-    #[Route('/detail/{slug}', name: 'detail')]
-    public function product_detail(
+    #[Route('/{slug}', name: 'detail')]
+    public function getProduct(
         EntityManagerInterface $entityManager,
         string $message,
         string $slug
@@ -64,7 +65,7 @@ class ProductController extends AbstractController
      * @return Response create a view of the product form
      */
     #[Route('/new', name:'new')]
-    public function new_product(
+    public function newProduct(
         EntityManagerInterface $entityManager,
         Request $request
     ) : Response
@@ -83,6 +84,50 @@ class ProductController extends AbstractController
             'title'         => 'Ajouter un nouveau produit',
             'product_form'  => $productForm->createView()
         ]);
+    }
+
+    /**
+     * @throws NonUniqueResultException
+     */
+    #[Route('/{slug}/update', name:'update')]
+    public function updateProduct(
+        EntityManagerInterface $entityManager,
+        Request $request,
+        string $slug
+    ) : Response {
+        $product = $entityManager->getRepository(Product::class)->findBySlug($slug);
+        if (!$product) {
+            throw $this->createNotFoundException(
+                'Ce produit n\'existe pas'
+            );
+        }
+        $productForm = $this->createForm(ProductType::class, $product);
+        $productForm->handleRequest($request);
+        if ($productForm->isSubmitted() && $productForm->isValid()) {
+            $entityManager->persist($product);
+            $entityManager->flush();
+            $this->addFlash('success', 'Le produit à bien été mis à jour');
+            $this->redirectToRoute('product_detail', ['slug' => $slug]);
+        }
+        return $this->render('product/new.html.twig', [
+            'title'=>'Mettre à jour le produit',
+            'productForm'=>$productForm
+        ]);
+    }
+
+    #[Route('/{slug}/delete', name: 'delete')]
+    public function deleteProduct(
+        EntityManagerInterface $entityManager,
+        string $slug
+    ) : Response {
+        $product = $entityManager->getRepository(Product::class)->findBySlug($slug);
+        if (!$product) {
+            throw $this->createNotFoundException('Ce produit n\'existe pas');
+        }
+        $entityManager->remove($product);
+        $entityManager->flush();
+        $this->addFlash('success', 'Le produit à bien été supprimé');
+        return $this->redirectToRoute('product_index');
     }
 
     /**
