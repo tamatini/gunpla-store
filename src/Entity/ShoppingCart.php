@@ -53,11 +53,17 @@ class ShoppingCart
 
     public function addCartItem(CartItem $cartItem): static
     {
+        /*foreach ($this->getCartItem() as $currentCartItem){
+            if ($currentCartItem->equals($cartItem)) {
+                $currentCartItem->setQuantity(
+                    $currentCartItem->getQuantity() + $cartItem->getQuantity()
+                );
+            }
+        }*/
         if (!$this->cartItem->contains($cartItem)) {
             $this->cartItem->add($cartItem);
             $cartItem->setShoppingCart($this);
         }
-
         return $this;
     }
 
@@ -87,7 +93,11 @@ class ShoppingCart
 
     public function getTotal(): ?float
     {
-        return $this->total;
+        $total = 0;
+        foreach ($this->getCartItem() as $item) {
+            $total += ($item->getQuantity() * $item->getProduct()->getSellPrice());
+        }
+        return $total;
     }
 
     public function setTotal(float $total): static

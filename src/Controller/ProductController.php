@@ -7,6 +7,8 @@ use App\Entity\Product;
 use App\Entity\ShoppingCart;
 use App\Entity\User;
 use App\Form\ProductType;
+use App\Service\CartItemService;
+use App\Service\ShoppingCartService;
 use Doctrine\DBAL\Exception;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\NonUniqueResultException;
@@ -137,18 +139,17 @@ class ProductController extends AbstractController
      * @return Response add product to shopping cart and return to the current position
      * @throws NonUniqueResultException
      */
-    #[Route('/add_to_cart/{slug}', name: 'add_to_cart')]
+    /*#[Route('/add_to_cart/{slug}', name: 'add_to_cart')]
     public function add_to_cart(
         EntityManagerInterface $entityManager,
         string $slug,
         Request $request
     ) : Response {
-        /** @var User $user */
+        /** @var User $user
         $user = $this->getUser();
 
         $product = $entityManager -> getRepository(Product::class) -> findBySlug($slug);
         $userShoppingCart = $user->getShoppingCart();
-        $cartItem = new CartItem();
         $currentPosition = $this -> redirect($request->getUri());
 
         if ($product->getStock() === 0) {
@@ -204,6 +205,18 @@ class ProductController extends AbstractController
         $entityManager->persist($shoppingCart);
         $entityManager->flush();
         return $this->redirectToRoute('home_index');
-    }
+    }*/
 
+    #[Route('/add_to_cart/{slug}', name: 'add_to_cart')]
+    public function addToCart(ShoppingCartService $shoppingCartService, CartItemService $cartItemService,
+        EntityManagerInterface $entityManager, string $slug, Request $request): Response
+    {
+        $product = $entityManager->getRepository(Product::class)->findBySlug($slug);
+        $shoppingCart = $shoppingCartService->getCurrentShoppingCart();
+
+        $cartItem = $cartItemService->getCartItem($shoppingCart, $product);
+        $shoppingCart->addCartItem($cartItem);
+        $shoppingCartService->saveShoppingCart($shoppingCart, $cartItem);
+        return $this->redirect($request->server->get('HTTP_REFERER'));
+    }
 }

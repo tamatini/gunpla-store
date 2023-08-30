@@ -53,7 +53,6 @@ class CartItem
     public function setProduct(Product $product): static
     {
         $this->product = $product;
-
         return $this;
     }
 
@@ -103,5 +102,10 @@ class CartItem
         $this->shoppingCart = $shoppingCart;
 
         return $this;
+    }
+
+    public function equals(CartItem $cartItem) : bool
+    {
+        return $cartItem->getProduct()->getId() === $this->getProduct()->getId();
     }
 }
