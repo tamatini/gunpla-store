@@ -8,7 +8,7 @@
 }
 
 body {
-    background-color: lightgray;
+    @apply bg-gundam-white;
 }
 
 @font-face {
@@ -66,7 +66,7 @@ section {
 }
 
 .nav {
-    @apply w-full bg-gundam-white h-16 shadow-2xl
+    @apply w-full bg-gundam-white h-16 shadow-md
 }
 
 .navbar {
@@ -133,21 +133,77 @@ section {
 }
 
 .form label {
-    @apply mt-5 mb-3 text-xl font-bold text-gundam-blue mx-5
+    @apply mt-5 mb-3 text-xl font-bold text-gundam-blue mx-5;
 }
 
 .form input[type=text], input[type=password], input[type=tel], input[type=email] {
     @apply pl-4 h-10 hover:border-b-2 text-gundam-blue
-    hover:border-gundam-blue bg-gundam-yellow mx-5
+    hover:border-gundam-blue bg-gundam-yellow mx-5;
 }
 
 .form input[type=submit] {
     @apply mt-10 bg-gundam-red py-3 text-gundam-yellow mx-5
     text-lg hover:bg-gundam-blue hover:text-gundam-white hover:cursor-pointer
-    hover:transition duration-150 ease-in-out
+    hover:transition duration-150 ease-in-out;
 }
 
 .register-link {
     @apply mx-5 text-gundam-red underline text-right
-    hover:cursor-pointer mt-3 hover:text-gundam-blue
+    hover:cursor-pointer mt-3 hover:text-gundam-blue;
+}
+
+.shopping-cart {
+    @apply w-4/6 mx-auto flex;
+}
+
+.cart {
+    @apply w-4/6 pr-16
+}
+
+.shopping-cart-aside {
+    @apply w-2/6 float-right bg-gundam-blue text-gundam-white p-5 text-sm
+}
+
+.shopping-cart-aside h2 {
+    @apply text-center text-xl text-gundam-yellow mt-5 mb-10
+}
+
+.shopping-cart-aside a {
+    @apply w-full text-center bg-gundam-red block py-3 text-base mt-5
+}
+
+.shopping-cart-aside table {
+    @apply w-full
+}
+
+.shopping-cart-aside table td:last-child {
+    @apply text-right
+}
+
+.cart-table {
+    @apply w-full
+}
+
+.cart-table thead {
+    @apply bg-gundam-blue text-gundam-yellow text-lg
+}
+
+.cart-table thead th {
+    @apply text-left py-3 font-light px-3
+}
+
+.cart-body-item {
+    @apply px-3
+}
+
+.shopping-cart-total {
+    @apply text-lg text-gundam-yellow pt-5
+}
+
+.cart-body-item:last-child {
+    @apply text-right
+}
+
+.nav-cart-validate {
+    @apply w-full bg-gundam-red py-3 px-3
 }

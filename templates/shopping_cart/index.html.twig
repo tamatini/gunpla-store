@@ -1,20 +1,37 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello ShoppingCartController!{% endblock %}
-
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/Users/Tamatini/tamatini/gunpla-store/src/Controller/ShoppingCartController.php'|file_link(0) }}">src/Controller/ShoppingCartController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/Users/Tamatini/tamatini/gunpla-store/templates/shopping_cart/index.html.twig'|file_link(0) }}">templates/shopping_cart/index.html.twig</a></code></li>
-    </ul>
-</div>
+<main class="shopping-cart">
+    <section class="cart">
+        <table class="cart-table">
+            <thead>
+                <tr>
+                    <th colspan="2"><h2>Votre commande</h2></th>
+                </tr>
+            </thead>
+            <tbody class="cart-body">
+                {% for item in shoppingCart.cartItem %}
+                    <tr>
+                        <td class="cart-body-item">{{ item.product.reference }}</td>
+                        <td class="cart-body-item">{{ item.product.sellPrice | number_format(2, '.') }} €</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </section>
+    <aside class="shopping-cart-aside">
+        <h2>Récapitulatif</h2>
+        <table>
+            <tr>
+                <td>Sous-total ({{ shoppingCart.cartItem.count }} article(s))</td>
+                <td>{{ shoppingCart.total | number_format(2, '€') }}</td>
+            </tr>
+            <tr>
+                <td class="shopping-cart-total">Total à payer</td>
+                <td class="shopping-cart-total">{{ shoppingCart.total | number_format(2, '€') }}</td>
+            </tr>
+        </table>
+        <a class="shopping-cart-validate" href="#">Valider mon panier</a>
+    </aside>
+</main>
 {% endblock %}

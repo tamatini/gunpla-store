@@ -42,15 +42,18 @@
                             </ul>
                         </li>
                     {% endfor %}
-                    <li class="w-full px-2 py-4 bg-gundam-grey text-gundam-yellow">
+                    <li class="w-full px-2 py-4 bg-gundam-grey text-gundam-yellow text-base">
                         <dl class="w-full">
                             <dd class="w-full flex justify-between">
                                 <span>Sous-total</span>
                                 <span>{{ app.user.shoppingCart.total | number_format(2, '.')  }} €</span>
                             </dd>
                             <dt class="text-xs text-left mt-1">Hors livraison et hors avantages</dt>
-                        </dl>
+                            <dt class="pt-8">
+                                <a class="nav-cart-validate" href="{{ path('shopping_cart_index') }}">Voir le panier</a>
 
+                            </dt>
+                        </dl>
                     </li>
                 {% endif %}
             </ul>
