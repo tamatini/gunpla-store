@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Product;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -45,6 +46,12 @@ class ProductType extends AbstractType
             ])
             ->add('scale', TextType::class, [
                 "label" => "échelle"
+            ])
+            ->add('images', FileType::class, [
+                "label" => "Images",
+                "multiple" => true,
+                "mapped"=>false,
+                "required"=>false
             ])
         ;
     }

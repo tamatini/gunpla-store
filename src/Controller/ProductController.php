@@ -3,11 +3,13 @@
 namespace App\Controller;
 
 use App\Entity\CartItem;
+use App\Entity\Images;
 use App\Entity\Product;
 use App\Entity\ShoppingCart;
 use App\Entity\User;
 use App\Form\ProductType;
 use App\Service\CartItemService;
+use App\Service\PictureService;
 use App\Service\ShoppingCartService;
 use Doctrine\DBAL\Exception;
 use Doctrine\ORM\EntityManagerInterface;
@@ -38,10 +40,45 @@ class ProductController extends AbstractController
         ]);
     }
 
+    /**
+     * @param EntityManagerInterface $entityManager
+     * @param Request $request
+     * @param PictureService $pictureService
+     * @return Response create a view of the product form
+     * @throws \Exception
+     */
+    #[Route('/new', name:'new')]
+    public function newProduct(
+        EntityManagerInterface $entityManager,
+        Request $request,
+        PictureService $pictureService
+    ) : Response
+    {
+        $product = new Product();
+        $productForm = $this -> createForm(ProductType::class, $product);
+        $productForm -> handleRequest($request);
+        if ($productForm-> isSubmitted() && $productForm->isValid()) {
+            $images = $productForm->get('images')->getData();
+            foreach ($images as $image) {
+                $folder = 'products';
+                $file = $pictureService->addImage($image, $folder, 300, 300);
+                $img = new Images();
+                $img->setName($file);
+                $product->addImage($img);
+            }
+            $entityManager->persist($product);
+            $entityManager->flush();
+            $this->addFlash("success", "L'article à bien été rajouter");
+            return $this-> redirectToRoute('product_new');
+        }
+        return $this->render('product/new.html.twig', [
+            'title'=>'Ajouter un nouveau produit',
+            'product_form'=>$productForm->createView()
+        ]);
+    }
 
     /**
      * @param EntityManagerInterface $entityManager
-     * @param string $message
      * @param string $slug
      * @return Response return the product detail page
      * @throws NonUniqueResultException
@@ -49,44 +86,17 @@ class ProductController extends AbstractController
     #[Route('/{slug}', name: 'detail')]
     public function getProduct(
         EntityManagerInterface $entityManager,
-        string $message,
         string $slug
     ): Response
     {
         $product = $entityManager->getRepository(Product::class)-> findBySlug($slug);
         return $this -> render('product/detail.html.twig', [
             'title' => $product->getReference(),
-            'product' => $product,
-            'message' => $message
+            'product' => $product
         ]);
     }
 
-    /**
-     * @param EntityManagerInterface $entityManager
-     * @param Request $request
-     * @return Response create a view of the product form
-     */
-    #[Route('/new', name:'new')]
-    public function newProduct(
-        EntityManagerInterface $entityManager,
-        Request $request
-    ) : Response
-    {
-        $product = new Product();
-        $productForm = $this -> createForm(ProductType::class, $product);
-        $productForm -> handleRequest($request);
-        if ($productForm-> isSubmitted() && $productForm->isValid()
-        ) {
-            $entityManager  -> persist($product);
-            $entityManager  -> flush();
-            $this           -> addFlash("success", "L'article à bien été rajouter");
-            return $this    -> redirectToRoute('product_new');
-        }
-        return $this->render('product/new.html.twig', [
-            'title'         => 'Ajouter un nouveau produit',
-            'product_form'  => $productForm->createView()
-        ]);
-    }
+
 
     /**
      * @throws NonUniqueResultException

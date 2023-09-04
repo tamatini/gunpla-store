@@ -17,7 +17,7 @@
                 <li class="card-product">
                     <section class="card-product-content">
                         <header></header>
-                        <a class="card-product-content-title">{{ latestProduct.reference }}</a>
+                        <a href="{{ path('product_detail', {'slug': latestProduct.slug }) }}" class="card-product-content-title">{{ latestProduct.reference }}</a>
                         <footer>
                             <p class="card-product-price">{{ latestProduct.sellPrice | number_format(2, '.') }} €</p>
                             {% if latestProduct.stock != 0 %}
