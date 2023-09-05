@@ -20,7 +20,7 @@ class HomeController extends AbstractController
         EntityManagerInterface $entityManager
     ): Response
     {
-        $latestProduct = $entityManager->getRepository(Product::class)->findLatestProduct();
+        $latestProduct = $entityManager->getRepository(Product::class)->findLatestProduct(8);
         return $this->render('home/index.html.twig', [
             'title'         => 'Accueil',
             'latestProducts' => $latestProduct

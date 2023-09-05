@@ -18,8 +18,32 @@ body {
     font-style: normal;
 }
 
-section {
-    @apply py-5
+.main-section {
+    @apply w-4/6 mx-auto shadow-lg px-3
+}
+
+.content {
+    @apply grid-cols-2 grid gap-0
+}
+
+.content-image-list {
+    @apply grid grid-cols-5 gap-2 mt-2
+}
+
+.content-detail {
+    @apply pl-5
+}
+
+.content-text  {
+    @apply text-sm
+}
+
+.content-title {
+    @apply text-5xl font-bold uppercase text-gundam-red mb-5
+}
+
+.selected-image {
+    @apply w-full
 }
 
 .section-title {
@@ -36,11 +60,19 @@ section {
 }
 
 .deck {
-    @apply grid grid-cols-5 w-4/6 mx-auto gap-2;
+    @apply grid grid-cols-4 w-4/6 mx-auto gap-5;
 }
 
 .card-product {
-    @apply bg-gundam-white;
+    @apply bg-gundam-white overflow-hidden;
+}
+
+.card-product-header {
+    @apply overflow-hidden
+}
+
+.card-product-thumbnail {
+    @apply hover:scale-125 hover:transition ease-in-out duration-150 w-full
 }
 
 .card-product-content {
@@ -48,7 +80,7 @@ section {
 }
 
 .card-product-content-title {
-    @apply text-xl uppercase font-bold;
+    @apply text-xl uppercase font-bold hover:underline;
 }
 
 .card-product-price {

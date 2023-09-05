@@ -15,6 +15,7 @@ use Doctrine\DBAL\Exception;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\NonUniqueResultException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -71,7 +72,7 @@ class ProductController extends AbstractController
             $this->addFlash("success", "L'article à bien été rajouter");
             return $this-> redirectToRoute('product_new');
         }
-        return $this->render('product/new.html.twig', [
+        return $this->render('admin/product/new.html.twig', [
             'title'=>'Ajouter un nouveau produit',
             'product_form'=>$productForm->createView()
         ]);
@@ -79,17 +80,19 @@ class ProductController extends AbstractController
 
     /**
      * @param EntityManagerInterface $entityManager
-     * @param string $slug
+     * @param int $id
      * @return Response return the product detail page
-     * @throws NonUniqueResultException
      */
-    #[Route('/{slug}', name: 'detail')]
+    #[Route('/{id}', name: 'detail')]
     public function getProduct(
         EntityManagerInterface $entityManager,
-        string $slug
+        int $id
     ): Response
     {
-        $product = $entityManager->getRepository(Product::class)-> findBySlug($slug);
+        $product = $entityManager->getRepository(Product::class)-> findOneBy(['id'=>$id]);
+        if (!$product) {
+            throw $this->createNotFoundException('Ce produit n\'existe pas');
+        }
         return $this -> render('product/detail.html.twig', [
             'title' => $product->getReference(),
             'product' => $product
@@ -97,17 +100,17 @@ class ProductController extends AbstractController
     }
 
 
-
     /**
-     * @throws NonUniqueResultException
+     * @throws \Exception
      */
-    #[Route('/{slug}/update', name:'update')]
-    public function updateProduct(
+    #[Route('/{id}/edit', name:'put')]
+    public function putProduct(
         EntityManagerInterface $entityManager,
         Request $request,
-        string $slug
+        int $id,
+        PictureService $pictureService
     ) : Response {
-        $product = $entityManager->getRepository(Product::class)->findBySlug($slug);
+        $product = $entityManager->getRepository(Product::class)->findOneBy(['id'=>$id]);
         if (!$product) {
             throw $this->createNotFoundException(
                 'Ce produit n\'existe pas'
@@ -116,17 +119,51 @@ class ProductController extends AbstractController
         $productForm = $this->createForm(ProductType::class, $product);
         $productForm->handleRequest($request);
         if ($productForm->isSubmitted() && $productForm->isValid()) {
+            $images = $productForm->get('images')->getData();
+            foreach ($images as $image) {
+                $folder = 'products';
+                $file = $pictureService->addImage($image, $folder, 300, 300);
+                $img = new Images();
+                $img->setName($file);
+                $product->addImage($img);
+            }
             $entityManager->persist($product);
             $entityManager->flush();
             $this->addFlash('success', 'Le produit à bien été mis à jour');
-            $this->redirectToRoute('product_detail', ['slug' => $slug]);
+            return $this->redirectToRoute('product_detail', ['id' => $id]);
         }
-        return $this->render('product/new.html.twig', [
+        return $this->render('admin/product/edit.html.twig', [
             'title'=>'Mettre à jour le produit',
-            'productForm'=>$productForm
+            'product_form'=>$productForm,
+            'product'=>$product
         ]);
     }
 
+    #[Route('/delete/image/{id}', 'delete_image')]
+    public function deleteImage(
+        Images $images,
+        Request $request,
+        EntityManagerInterface $entityManager,
+        PictureService $pictureService
+    ) : Response
+    {
+        $image = $entityManager->getRepository(Images::class)->findOneBy(['id'=>$images->getId()]);
+        if ($this->isCsrfTokenValid('delete' . $image->getId(), $request->get('token'))) {
+            $name = $image->getName();
+            if ($pictureService->deleteImage($name, 'products', 300, 300)) {
+                $entityManager->remove($image);
+                $entityManager->flush();
+                $this->addFlash('success', 'L\'image à été supprimer avec succès');
+            }
+            $this->addFlash('error', 'Erreur de suppression');
+            return $this->redirect($request->server->get('HTTP_REFERER'));
+        }
+        return $this->redirect($request->server->get('HTTP_REFERER'));
+    }
+
+    /**
+     * @throws NonUniqueResultException
+     */
     #[Route('/{slug}/delete', name: 'delete')]
     public function deleteProduct(
         EntityManagerInterface $entityManager,
@@ -143,6 +180,8 @@ class ProductController extends AbstractController
     }
 
     /**
+     * @param ShoppingCartService $shoppingCartService
+     * @param CartItemService $cartItemService
      * @param EntityManagerInterface $entityManager
      * @param string $slug
      * @param Request $request

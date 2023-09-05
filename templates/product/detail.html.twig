@@ -1,7 +1,47 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-    <main>
-        <h1>{{ product.reference }}</h1>
-        <p>{{ product.description }}</p>
+    <main class="main-section">
+        <article class="content">
+            <section>
+                {% set index = 0 %}
+                {% if product.images is not empty %}
+                    <img class="selected-image" src="{{ asset('uploads/products/mini/300x300-'~product.images[index].name) }}" alt="{{ product.images[index].name }}">
+                    <div class="content-image-list">
+                        {% for image in product.images %}
+                            <img src="{{ asset('uploads/products/mini/300x300-'~image.name) }}" alt="thumbnail gundam" onclick="{% set index = loop.index %}">
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <img class="selected-image" src="{{ asset('images/default-placeholder-300x300.png') }}" alt="image par défaut">
+                {% endif %}
+            </section>
+            <section class="content-detail">
+                <h1 class="content-title">{{ product.reference }}</h1>
+                <hr class="mb-5">
+                {% if product.stock == 0 %}
+                    <p class="text-gundam-red content-text">Ce produit n'est plus en stock</p>
+                {% else %}
+                    <p class="content-text">Qté en stock : {{ product.stock }}</p>
+                {% endif %}
+                <h2 class="text-gundam-blue mt-5">Description</h2>
+                <p class="content-text">{{ product.description }}</p>
+                <hr class="my-5">
+                <h2 class="text-gundam-blue">Détail</h2>
+                <ul>
+                    <li class="content-text">Taille: {{ product.scale }}</li>
+                    <li class="content-text">Emballage/poids: {{ product.length }}cm(L) x {{ product.width }}cm(l) x {{ product.height }}cm(H) / {{ product.weight }}g</li>
+                </ul>
+                <a class="card-product-add-cart" href="">Ajouter au panier</a>
+            </section>
+        </article>
+        <hr class="my-5">
+        <article class="py-8">
+            <p class="content-text">
+                Les gunpla sont des maquettes de mecha en plastique issues de la franchise Gundam commercialisé par Bandai. Il résulte de la contraption "Gundam plastic model".
+                Les maquettes sont articulée et à assembler sans colle ni peinture (optionnel). Les socles de présentation sont disponibles séparément, sauf indication contraire.
+            </p>
+            <img class="w-full my-5" src="{{ asset('images/detail-description-sseparator.webp') }}" alt="gundam rx78">
+
+        </article>
     </main>
 {% endblock %}

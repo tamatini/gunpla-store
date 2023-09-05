@@ -2,8 +2,18 @@
 
 {% block body %}
 <main>
+    <section class="w-full py-0">
+        <img class="" src="{{ asset('images/banner/bandeau_gundam_virtue.jpg.webp') }}" alt="gundam virtue">
+    </section>
+    <section class="pb-96">
+        <div class="w-4/6 mx-auto">
+            <h2>Categories</h2>
+
+        </div>
+    </section>
+
     <!-- Latest product section -->
-    <section id="latest_product" class="bg-gundam-blue">
+    <section id="latest_product" class="bg-gundam-blue py-8">
         <!-- section header -->
         <header class="section-title">
             <h2>Nouveautés!</h2>
@@ -15,9 +25,17 @@
             {% for latestProduct in latestProducts %}
                 <!-- Card -->
                 <li class="card-product">
+                        <header class="card-product-header">
+                            <a href="{{ path('product_detail', {'id': latestProduct.id}) }}">
+                                {% if latestProduct.images is not empty %}
+                                    <img class="card-product-thumbnail" src="{{ asset('uploads/products/mini/300x300-' ~ latestProduct.images[0].name) }}" alt="thumbnail">
+                                {% else %}
+                                    <img class="card-product-thumbnail" src="{{ asset('images/default-placeholder-300x300.png') }}" alt="default image">
+                                {% endif %}
+                            </a>
+                        </header>
                     <section class="card-product-content">
-                        <header></header>
-                        <a href="{{ path('product_detail', {'slug': latestProduct.slug }) }}" class="card-product-content-title">{{ latestProduct.reference }}</a>
+                        <a href="{{ path('product_detail', {'id': latestProduct.id }) }}" class="card-product-content-title">{{ latestProduct.reference }}</a>
                         <footer>
                             <p class="card-product-price">{{ latestProduct.sellPrice | number_format(2, '.') }} €</p>
                             {% if latestProduct.stock != 0 %}

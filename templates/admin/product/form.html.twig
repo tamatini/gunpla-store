@@ -1,0 +1,23 @@
+{{ form_start(product_form) }}
+    {{ form_row(product_form.reference) }}
+    {{ form_row(product_form.slug) }}
+    {{ form_row(product_form.description) }}
+    {{ form_row(product_form.weight) }}
+    {{ form_row(product_form.width) }}
+    {{ form_row(product_form.height) }}
+    {{ form_row(product_form.length) }}
+    {{ form_row(product_form.sellPrice) }}
+    {{ form_row(product_form.stock) }}
+    {{ form_row(product_form.scale) }}
+    {% if app.request.attributes.get('_route') == 'product_put' %}
+        <h2>Thumbnails : </h2>
+        {% for image in product.images %}
+            <div>
+                <img src="{{ asset('uploads/products/mini/300x300-' ~image.name) }}" alt="thumbnail">
+                <a href="{{ path('product_delete_image', {'id': image.id }) }}" data-delete data-token="{{ csrf_token('delete' ~image.id) }}">Supprimer</a>
+            </div>
+        {% endfor %}
+    {% endif %}
+    {{ form_row(product_form.images) }}
+    <input type="submit" value="submit">
+{{ form_end(product_form) }}
