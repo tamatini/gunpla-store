@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <main>
+        <div><a href="{{ path('admin_product_new') }}">+ Nouveau produit</a></div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Référence</th>
+                    <th>Stock</th>
+                    <th>Prix de vente</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for product in products %}
+                    <tr>
+                        <td>{{ product.reference }}</td>
+                        <td>{{ product.stock }}</td>
+                        <td>{{ product.sell_price|number_format(2, '.') }} €</td>
+                        <td>
+                            <a href="{{ path('admin_product_put', {'id': product.id}) }}">Modifier</a>
+                            <a href="{{ path('admin_product_delete', {'id': product.id}) }}">Supprimer</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </main>
+{% endblock %}

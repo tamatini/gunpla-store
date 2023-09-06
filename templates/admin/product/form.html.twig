@@ -9,12 +9,12 @@
     {{ form_row(product_form.sellPrice) }}
     {{ form_row(product_form.stock) }}
     {{ form_row(product_form.scale) }}
-    {% if app.request.attributes.get('_route') == 'product_put' %}
+    {% if app.request.attributes.get('_route') == 'admin_product_put' %}
         <h2>Thumbnails : </h2>
         {% for image in product.images %}
             <div>
                 <img src="{{ asset('uploads/products/mini/300x300-' ~image.name) }}" alt="thumbnail">
-                <a href="{{ path('product_delete_image', {'id': image.id }) }}" data-delete data-token="{{ csrf_token('delete' ~image.id) }}">Supprimer</a>
+                <a href="{{ path('admin_product_delete_image', {'id': image.id }) }}" data-delete data-token="{{ csrf_token('delete' ~image.id) }}">Supprimer</a>
             </div>
         {% endfor %}
     {% endif %}

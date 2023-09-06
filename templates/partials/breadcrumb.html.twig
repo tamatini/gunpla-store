@@ -1,0 +1,30 @@
+{% macro render(items) %}
+    {% set metadata = {
+        '@context' : 'https://schema.org',
+        '@type': 'BreadcumbList',
+        'itemListElement' : []
+    } %}
+
+    <nav aria-label="Breadcrumb">
+        <ol>
+            {%- for item in items -%}
+                {% set ld_item = {
+                    '@type': 'ListItem',
+                    'position': loop.index,
+                    'name': item.text|e('html_attr')
+                } %}
+                {% set active = loop.last %}
+                {% set active_class = active ? ' active' %}
+                <li class="{{ active_class }}" {% if active %} aria-current="page" {% endif %}>
+                    {% if item.url is defined %}
+                        <a href="{{ item.url }}">{{ item.text }}</a>
+                        {% set ld_item = ld_item|merge({'item': item.url})%}
+                    {% else %}
+                        {{ item.text }}
+                    {% endif %}
+                </li>
+                {% set metadata = metadata|merge({'itemListElement': metadata.itemListElement|merge([ld_item]), }) %}
+            {% endfor %}
+        </ol>
+    </nav>
+{% endmacro %}

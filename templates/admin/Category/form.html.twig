@@ -1,0 +1,12 @@
+{{ form_start(category_form) }}
+<label for="{{ field_name(category_form.name) }}">Nom de la catégorie</label>
+<input type="text" id="{{ field_name(category_form.name) }}" name="{{ field_name(category_form.name) }}">
+<label for="{{ field_name(category_form.slug) }}">Slug</label>
+<input type="text" id="{{ field_name(category_form.slug) }}" name="{{ field_name(category_form.slug) }}">
+<label for="{{ field_name(category_form.imageUrl) }}">Thumbnail</label>
+<input type="file" id="{{ field_name(category_form.imageUrl) }}" name="{{ field_name(category_form.imageUrl) }}">
+<label for="{{ field_name(category_form.description) }}">Description</label>
+<textarea name="{{ field_name(category_form.description) }}"
+          id="{{ field_name(category_form.description) }}"></textarea>
+<input type="submit" placeholder="Valider">
+{{ form_end(category_form) }}

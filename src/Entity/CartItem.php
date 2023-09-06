@@ -27,8 +27,8 @@ class CartItem
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $updatedAt = null;
 
-    #[ORM\ManyToOne(inversedBy: 'cartItem')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\ManyToOne(cascade: ['remove'], inversedBy: 'cartItem')]
+    #[ORM\JoinColumn(nullable: true, onDelete: 'SET NULL')]
     private ?ShoppingCart $shoppingCart = null;
 
     public function __construct()

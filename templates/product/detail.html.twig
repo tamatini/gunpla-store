@@ -1,6 +1,14 @@
+{% import 'partials/breadcrumb.html.twig' as breadcrumbs %}
+
 {% extends 'base.html.twig' %}
 {% block body %}
     <main class="main-section">
+        {{ breadcrumbs.render([
+            {'url': url('home_index'), text: 'Accueil'},
+            {'url': url('product_index'), text: 'Boutique'},
+            {'url': url('product_detail', {'id': product.id}), text: product.reference}
+        ]) }}
+
         <article class="content">
             <section>
                 {% set index = 0 %}
