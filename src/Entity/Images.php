@@ -17,8 +17,10 @@ class Images
     private ?string $name = null;
 
     #[ORM\ManyToOne(inversedBy: 'images')]
-    #[ORM\JoinColumn(nullable: false)]
     private ?Product $products = null;
+
+    #[ORM\ManyToOne(inversedBy: 'images')]
+    private ?Category $category = null;
 
     public function getId(): ?int
     {
@@ -45,6 +47,18 @@ class Images
     public function setProducts(?Product $products): static
     {
         $this->products = $products;
+
+        return $this;
+    }
+
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?Category $category): static
+    {
+        $this->category = $category;
 
         return $this;
     }

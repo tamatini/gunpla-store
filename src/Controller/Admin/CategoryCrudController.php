@@ -36,15 +36,13 @@ class CategoryCrudController extends AbstractController
         $categoryForm = $this->createForm(CategoryType::class, $category);
         $categoryForm->handleRequest($request);
         if ($categoryForm->isSubmitted() && $categoryForm->isValid()) {
-            $images = $categoryForm->get('images')->getData();
-            foreach ($images as $image) {
-                $folder = 'categories';
-                $file = $pictureService->addImage($image, $folder, 450, 300);
-                $img = new Images();
-                $img->setName($file);
-                $category->setImageUrl($image);
-            }
-            $entityManager->persist($categoryForm);
+            $image = $categoryForm->get('images')->getData();
+            $folder = 'categories';
+            $file = $pictureService->addImage($image, $folder, 450, 300);
+            $img = new Images();
+            $img->setName($file);
+            $category->addImage($img);
+            $entityManager->persist($category);
             $entityManager->flush();
             $this->addFlash('success', "La catégorie à bien été ajoutée");
             return $this->redirectToRoute('admin_category_list');
@@ -61,40 +59,69 @@ class CategoryCrudController extends AbstractController
         Category $category
     ) : Response {
         $category = $entityManager->getRepository(Category::class)->findOneBy(['id'=>$category->getId()]);
-        if ($category) {
+        if (!$category) {
             throw $this->createNotFoundException(
                 'Cette catégorie n\'existe pas'
             );
         }
         $entityManager->remove($category);
         $entityManager->flush();
-        return $this->redirectToRoute('category_admin');
+        return $this->redirectToRoute('admin_category_list');
     }
 
-    #[Route('/{id}/edit', name: 'edit')]
+    #[Route('/{id}/edit', name: 'put')]
     public function put(
         EntityManagerInterface $entityManager,
         Request $request,
-        Category $category
+        Category $category,
+        PictureService $pictureService
     ) : Response {
         $category = $entityManager->getRepository(Category::class)->findOneBy(['id'=>$category->getId()]);
-        if ($category) {
+        if (!$category) {
             throw $this->createNotFoundException(
                 'Cette catégories n\'existe pas'
             );
         }
         $categoryForm = $this->createForm(CategoryType::class, $category);
         $categoryForm->handleRequest($request);
-        if ($categoryForm->isValid() && $categoryForm->isSubmitted()) {
-            $entityManager->persist($categoryForm);
+        if ($categoryForm->isSubmitted() && $categoryForm->isValid()) {
+            $image = $categoryForm->get('images')->getData();
+            $folder = 'categories';
+            $file = $pictureService->addImage($image, $folder, 450, 300);
+            $img = new Images();
+            $img->setName($file);
+            $category->addImage($img);
+            $entityManager->persist($category);
             $entityManager->flush();
             $this->addFlash('success', 'La catégorie à été mise à jour');
-            return $this->redirectToRoute('category_admin');
+            return $this->redirectToRoute('admin_category_list');
         }
         return $this->render('admin/Category/edit.html.twig', [
             'title' => 'Mettre à jour la catégorie ' . $category->getName(),
-            'categoryForm' => $categoryForm->createView()
+            'category_form' => $categoryForm->createView(),
+            'category'=>$category
         ]);
+    }
+
+    #[Route('/delete/image/{id}', 'delete_image')]
+    public function deleteImage(
+        Images $images,
+        Request $request,
+        EntityManagerInterface $entityManager,
+        PictureService $pictureService
+    ) : Response {
+        $image = $entityManager->getRepository(Images::class)->findOneBy(['id'=>$images->getId()]);
+        if ($this->isCsrfTokenValid('delete' . $image->getId(), $request->get('token'))) {
+            $name = $image->getName();
+            if($pictureService->deleteImage($name, 'categories', 450, 300)) {
+                $entityManager->remove($image);
+                $entityManager->flush();
+                $this->addFlash('success', 'L\'image à été supprimer avec succès');
+            }
+            $this->addFlash('error', 'Erreur de suppression');
+            return $this->redirect($request->server->get('HTTP_REFERER'));
+        }
+        return $this->redirect($request->server->get('HTTP_REFERER'));
     }
 
 }

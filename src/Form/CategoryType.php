@@ -18,7 +18,12 @@ class CategoryType extends AbstractType
             ->add('name', TextType::class)
             ->add('slug', TextType::class)
             ->add('description', TextareaType::class)
-            ->add('imageUrl', FileType::class)
+            ->add('images', FileType::class, [
+                'label'=>"Images",
+                'multiple'=>false,
+                'mapped'=>false,
+                'required'=>false
+            ])
         ;
     }
 

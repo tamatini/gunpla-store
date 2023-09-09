@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Category;
+use App\Entity\Product;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -28,8 +29,12 @@ class CategoryController extends AbstractController
         Category $category
     ): Response {
         $category = $entityManager->getRepository(Category::class)->findOneBy(['id'=>$category->getId()]);
+        $products = $entityManager->getRepository(Product::class)->findAll(['category'=>$category]);
         if (!$category) {
             throw $this->createNotFoundException('Cette catégorie n\'existe pas');
+        }
+        if (!$products) {
+            throw $this->createNotFoundException('Il n\'y a aucun produit dans cette catégorie');
         }
         return $this->render('category/detail.html.twig', [
             'title' => $category->getName(),
