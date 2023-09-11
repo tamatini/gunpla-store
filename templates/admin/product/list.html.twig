@@ -1,6 +1,6 @@
-{% extends 'base.html.twig' %}
-{% block body %}
-    <main>
+{% extends 'admin/index.html.twig' %}
+{% block content %}
+    <section>
         <div><a href="{{ path('admin_product_new') }}">+ Nouveau produit</a></div>
         <table>
             <thead>
@@ -25,5 +25,5 @@
                 {% endfor %}
             </tbody>
         </table>
-    </main>
+    </section>
 {% endblock %}

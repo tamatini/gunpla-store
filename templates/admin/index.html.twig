@@ -1,0 +1,14 @@
+{% include 'partials/header.html.twig' %}
+    <body>
+        <main class="admin-main">
+            {% include 'partials/adminNav.html.twig' %}
+            <section class="admin-section">
+                {% block content %}
+                {% endblock %}
+            </section>
+        </main>
+    </body>
+</html>
+
+
+

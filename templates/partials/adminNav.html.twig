@@ -1,0 +1,31 @@
+<aside class="admin-nav">
+    <h1>Gunpla Shop</h1>
+    <ul class="admin-nav-list">
+        <li>
+            <h2 class="admin-nav-subtitle">Catégories</h2>
+            <ul class="admin-nav-sublist">
+                <li>
+                    <a href="{{ path('admin_category_list') }}">Toutes les catégories</a>
+                </li>
+                <li>
+                    <a href="{{ path('admin_category_new') }}">Ajouter une catégorie</a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <h2 class="admin-nav-subtitle">Produits</h2>
+            <ul class="admin-nav-sublist">
+                <li>
+                    <a href="{{ path('admin_product_list') }}">Tous les produits</a>
+                </li>
+                <li>
+                    <a href="{{ path('admin_product_new') }}">Ajouter un produits</a>
+                </li>
+            </ul>
+        </li>
+
+        <li>
+            <a href="{{ path('home_index') }}">Retour à l'accueil</a>
+        </li>
+    </ul>
+</aside>

@@ -1,7 +1,7 @@
-{% extends 'base.html.twig' %}
-{% block body %}
-    <main>
-        <h1>Modifier catégorie "{{ category.name }}"</h1>
+{% extends 'admin/index.html.twig' %}
+{% block content %}
+    <section>
+        <h1>Modifier la catégorie "{{ category.name }}"</h1>
         {% include('admin/Category/form.html.twig') %}
-    </main>
+    </section>
 {% endblock %}

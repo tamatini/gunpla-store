@@ -8,7 +8,7 @@
 }
 
 body {
-    @apply bg-gundam-white;
+    @apply bg-gundam-white min-h-screen;
 }
 
 @font-face {
@@ -238,4 +238,36 @@ body {
 
 .nav-cart-validate {
     @apply w-full bg-gundam-red py-3 px-3
+}
+
+.admin-main {
+    @apply w-full flex min-h-full
+}
+
+.admin-nav {
+    @apply w-[300px] min-h-screen bg-gundam-blue shadow-xl
+}
+
+.admin-nav h1 {
+    @apply text-2xl text-gundam-yellow text-center my-9 underline
+}
+
+.admin-nav-list {
+    @apply mx-3
+}
+
+.admin-section {
+    @apply w-full
+}
+
+.admin-nav-subtitle {
+    @apply text-gundam-yellow
+}
+
+.admin-nav-sublist {
+    @apply ml-2 text-sm text-gundam-white font-light
+}
+
+.admin-nav-sublist li {
+    @apply my-1
 }
