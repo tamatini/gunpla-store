@@ -1,25 +1,31 @@
 {% extends 'admin/index.html.twig' %}
 {% block content %}
-    <section>
-        <div><a href="{{ path('admin_product_new') }}">+ Nouveau produit</a></div>
-        <table>
-            <thead>
+    <section class="admin-panel">
+        <h1 class="admin-panel-title">Tous les produits</h1>
+        <hr>
+        <a class="admin-panel-add-button" href="{{ path('admin_product_new') }}">Ajouter</a>
+        <table class="admin-panel-table">
+            <thead class="admin-panel-table-header">
                 <tr>
                     <th>Référence</th>
                     <th>Stock</th>
                     <th>Prix de vente</th>
-                    <th></th>
+                    <th>Actions</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody class="admin-panel-table-body">
                 {% for product in products %}
                     <tr>
                         <td>{{ product.reference }}</td>
                         <td>{{ product.stock }}</td>
                         <td>{{ product.sell_price|number_format(2, '.') }} €</td>
                         <td>
-                            <a href="{{ path('admin_product_put', {'id': product.id}) }}">Modifier</a>
-                            <a href="{{ path('admin_product_delete', {'id': product.id}) }}">Supprimer</a>
+                            <a class="admin-panel-button admin-panel-edit-button" href="{{ path('admin_product_put', {'id': product.id}) }}">
+                                <i class="fa-solid fa-pen"></i>
+                            </a>
+                            <a class="admin-panel-button admin-panel-delete-button" href="{{ path('admin_product_delete', {'id': product.id}) }}">
+                                <i class="fa-solid fa-trash"></i>
+                            </a>
                         </td>
                     </tr>
                 {% endfor %}

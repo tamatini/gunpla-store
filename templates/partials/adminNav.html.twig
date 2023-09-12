@@ -1,14 +1,21 @@
 <aside class="admin-nav">
+    <img class="w-16 mx-auto mt-8" src="{{ asset('images/gundam-head.png') }}" alt="gundam head">
     <h1>Gunpla Shop</h1>
     <ul class="admin-nav-list">
         <li>
             <h2 class="admin-nav-subtitle">Catégories</h2>
             <ul class="admin-nav-sublist">
                 <li>
-                    <a href="{{ path('admin_category_list') }}">Toutes les catégories</a>
+                    <a href="{{ path('admin_category_list') }}">
+                        <i class="fa-solid fa-file"></i>
+                        Toutes les catégories
+                    </a>
                 </li>
                 <li>
-                    <a href="{{ path('admin_category_new') }}">Ajouter une catégorie</a>
+                    <a href="{{ path('admin_category_new') }}">
+                        <i class="fa-solid fa-plus"></i>
+                        Ajouter une catégorie
+                    </a>
                 </li>
             </ul>
         </li>
@@ -16,16 +23,25 @@
             <h2 class="admin-nav-subtitle">Produits</h2>
             <ul class="admin-nav-sublist">
                 <li>
-                    <a href="{{ path('admin_product_list') }}">Tous les produits</a>
+                    <a href="{{ path('admin_product_list') }}">
+                        <i class="fa-solid fa-file"></i>
+                        Tous les produits
+                    </a>
                 </li>
                 <li>
-                    <a href="{{ path('admin_product_new') }}">Ajouter un produits</a>
+                    <a href="{{ path('admin_product_new') }}">
+                        <i class="fa-solid fa-plus"></i>
+                        Ajouter un produits
+                    </a>
                 </li>
             </ul>
         </li>
 
-        <li>
-            <a href="{{ path('home_index') }}">Retour à l'accueil</a>
+        <li class="mt-5">
+            <a class="text-gundam-yellow" href="{{ path('home_index') }}">
+                <i class="fa-solid fa-right-from-bracket fa-rotate-180"></i>
+                Retour à l'accueil
+            </a>
         </li>
     </ul>
 </aside>

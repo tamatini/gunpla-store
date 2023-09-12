@@ -1,4 +1,9 @@
-{{ form_start(category_form) }}
+{{ form_start(category_form, {
+    'attr': {
+        'class': 'admin-panel-form',
+        'autocomplete': 'off'
+    }
+}) }}
     {{ form_row(category_form.name) }}
     {{ form_row(category_form.slug) }}
     {{ form_row(category_form.description) }}

@@ -1,25 +1,31 @@
 {% extends 'admin/index.html.twig' %}
 {% block content %}
-    <main>
-        <div><a href="{{ path('admin_category_new') }}">+ Nouvelle catégorie</a></div>
-        <table>
-            <thead>
-            <tr>
-                <th>Nom de la catégorie</th>
-                <th></th>
-            </tr>
+    <section class="admin-panel">
+        <h1 class="admin-panel-title">Toutes les catégories</h1>
+        <hr>
+        <a class="admin-panel-add-button" href="{{ path('admin_category_new') }}">Ajouter</a>
+        <table class="admin-panel-table">
+            <thead class="admin-panel-table-header">
+                <tr>
+                    <th>Nom de la catégorie</th>
+                    <th>Actions</th>
+                </tr>
             </thead>
-            <tbody>
+            <tbody class="admin-panel-table-body">
             {% for category in categories %}
                 <tr>
                     <td>{{ category.name }}</td>
                     <td>
-                        <a href="{{ path('admin_category_put', {'id': category.id}) }}">Modifier</a>
-                        <a href="{{ path('admin_category_delete', {'id': category.id}) }}">Supprimer</a>
+                        <a class="admin-panel-button admin-panel-edit-button" href="{{ path('admin_category_put', {'id': category.id}) }}">
+                            <i class="fa-solid fa-pen"></i>
+                        </a>
+                        <a class="admin-panel-button admin-panel-delete-button" href="{{ path('admin_category_delete', {'id': category.id}) }}">
+                            <i class="fa-solid fa-trash"></i>
+                        </a>
                     </td>
                 </tr>
             {% endfor %}
             </tbody>
         </table>
-    </main>
+    </section>
 {% endblock %}

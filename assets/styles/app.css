@@ -245,11 +245,11 @@ body {
 }
 
 .admin-nav {
-    @apply w-[300px] min-h-screen bg-gundam-blue shadow-xl
+    @apply w-[300px] min-h-screen bg-gundam-blue shadow-xl text-sm
 }
 
 .admin-nav h1 {
-    @apply text-2xl text-gundam-yellow text-center my-9 underline
+    @apply text-2xl text-gundam-yellow text-center mb-9 underline
 }
 
 .admin-nav-list {
@@ -270,4 +270,113 @@ body {
 
 .admin-nav-sublist li {
     @apply my-1
+}
+
+.admin-panel-title {
+    @apply text-2xl text-gundam-red mb-5 uppercase
+}
+
+.admin-panel {
+    @apply m-10
+}
+
+.admin-panel hr {
+    @apply border-gundam-red mb-4
+}
+
+.admin-panel-table {
+    @apply w-full mt-5 text-xs
+}
+
+.admin-panel-table-header {
+    @apply h-[40px] bg-gundam-blue text-gundam-yellow font-light
+}
+
+.admin-panel-table-header th, td {
+    @apply px-4
+}
+
+.admin-panel-table-header th:last-child {
+    @apply w-[10%]
+}
+
+.admin-panel-table-header:first-child {
+    @apply text-left;
+}
+
+
+.admin-panel-add-button {
+    @apply bg-gundam-blue text-gundam-white py-3 px-5 float-right mb-5 font-normal text-sm
+}
+
+.admin-panel-button {
+    @apply text-gundam-white rounded-md mx-1 text-center inline-block w-[35px] py-2;
+}
+
+.admin-panel-edit-button {
+    @apply bg-gundam-blue
+}
+
+.admin-panel-delete-button {
+    @apply bg-gundam-red
+}
+
+.admin-panel-table-body td {
+    @apply py-1
+}
+
+.admin-panel-table-body tr:nth-child(even) {
+    @apply bg-gundam-grey bg-opacity-30
+}
+
+.admin-panel-table-body td:last-child {
+    @apply flex align-middle justify-center
+}
+
+.admin-panel-form {
+    @apply text-sm w-full grid-cols-4 grid gap-2
+}
+
+.admin-panel-form section:first-child {
+    @apply col-span-3
+}
+
+
+.admin-panel-form input[type=text] {
+    @apply border border-gundam-blue p-1 bg-gundam-grey bg-opacity-10 w-full
+}
+
+.admin-panel-form input[type=text]:focus {
+    outline: none;
+    @apply border border-gundam-red
+}
+
+.admin-panel-form label {
+    @apply block mt-3 mb-1 text-gundam-blue underline
+}
+
+.admin-panel-form textarea {
+    @apply border border-gundam-blue p-1 bg-gundam-grey bg-opacity-10 w-full h-[150px]
+}
+
+.admin-panel-form textarea:focus {
+    outline: none;
+    @apply border-gundam-red border
+}
+
+.admin-panel-form input[type=file]::file-selector-button {
+    @apply bg-gundam-blue text-gundam-white rounded-none border-none py-2 px-3 hover:cursor-pointer hover:text-gundam-yellow hover:bg-gundam-red
+}
+
+.admin-panel-form input[type=number] {
+    @apply bg-gundam-grey bg-opacity-10 border border-gundam-blue w-full p-1
+}
+
+.admin-panel-form input[type=number]:focus {
+    outline: none;
+    @apply border-gundam-red
+}
+
+.admin-panel-form input[type=submit] {
+    @apply bg-gundam-blue py-2 px-3 mt-3 text-gundam-white hover:cursor-pointer hover:bg-gundam-red hover:text-gundam-yellow
 }
