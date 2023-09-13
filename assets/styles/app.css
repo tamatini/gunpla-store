@@ -1,16 +1,13 @@
+@import "_admin.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 * {
-    font-family: 'Plavsky', sans-serif;
-    @apply tracking-widest
 }
 
-body {
-    @apply bg-gundam-white min-h-screen;
-}
-
+/* Font imports */
 @font-face {
     font-family: 'Plavsky';
     src: url("../fonts/Plavsky.otf") format("truetype");
@@ -18,6 +15,58 @@ body {
     font-style: normal;
 }
 
+@font-face {
+    font-family: 'Plavsky';
+    src: url("../fonts/Plavsky Bold.otf") format("truetype");
+    font-weight: 700;
+}
+
+/* Global styles */
+body {
+    @apply bg-gundam-white min-h-screen tracking-widest;
+    font-family: 'Plavsky', sans-serif;
+    font-weight: 400;
+}
+
+p, span, a, th, td, label, input, textarea {
+    font-size: 10px;
+    letter-spacing: 0.1rem;
+}
+
+a {
+    cursor: pointer;
+}
+
+label {
+    @apply text-gundam-blue block mt-3;
+    line-height: 2rem;
+}
+
+h1, h2, h3 {
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+h1 {
+    font-size: 2rem;
+    line-height: 4rem;
+}
+
+h2 {
+    font-size: 1rem;
+    line-height: 2rem;
+}
+
+input:not([type="submit"], [type="file"]), textarea {
+    @apply p-2 bg-gundam-grey bg-opacity-10
+    border-b border-gundam-blue w-full
+}
+
+input, textarea {
+    outline: none;
+}
+
+/* Style specs */
 .main-section {
     @apply w-4/6 mx-auto shadow-lg px-3
 }
@@ -34,12 +83,12 @@ body {
     @apply pl-5
 }
 
-.content-text  {
+.content-text {
     @apply text-sm
 }
 
 .content-title {
-    @apply text-5xl font-bold uppercase text-gundam-red mb-5
+    @apply text-gundam-red mb-5
 }
 
 .selected-image {
@@ -80,7 +129,7 @@ body {
 }
 
 .card-product-content-title {
-    @apply text-xl uppercase font-bold hover:underline;
+    @apply uppercase hover:underline;
 }
 
 .card-product-price {
@@ -161,27 +210,21 @@ body {
 }
 
 .form h1 {
-    @apply text-4xl text-center py-8 bg-gundam-blue text-gundam-white;
+    @apply text-center bg-gundam-blue text-gundam-white py-2;
 }
 
-.form label {
-    @apply mt-5 mb-3 text-xl font-bold text-gundam-blue mx-5;
-}
-
-.form input[type=text], input[type=password], input[type=tel], input[type=email] {
-    @apply pl-4 h-10 hover:border-b-2 text-gundam-blue
-    hover:border-gundam-blue bg-gundam-yellow mx-5;
+form section {
+    @apply p-3;
 }
 
 .form input[type=submit] {
-    @apply mt-10 bg-gundam-red py-3 text-gundam-yellow mx-5
+    @apply mt-10 bg-gundam-red py-3 px-5 text-gundam-yellow block
     text-lg hover:bg-gundam-blue hover:text-gundam-white hover:cursor-pointer
-    hover:transition duration-150 ease-in-out;
+    hover:transition duration-150 ease-in-out float-right;
 }
 
 .register-link {
-    @apply mx-5 text-gundam-red underline text-right
-    hover:cursor-pointer mt-3 hover:text-gundam-blue;
+    @apply text-gundam-red hover:text-gundam-blue block mt-2;
 }
 
 .shopping-cart {
@@ -240,143 +283,3 @@ body {
     @apply w-full bg-gundam-red py-3 px-3
 }
 
-.admin-main {
-    @apply w-full flex min-h-full
-}
-
-.admin-nav {
-    @apply w-[300px] min-h-screen bg-gundam-blue shadow-xl text-sm
-}
-
-.admin-nav h1 {
-    @apply text-2xl text-gundam-yellow text-center mb-9 underline
-}
-
-.admin-nav-list {
-    @apply mx-3
-}
-
-.admin-section {
-    @apply w-full
-}
-
-.admin-nav-subtitle {
-    @apply text-gundam-yellow
-}
-
-.admin-nav-sublist {
-    @apply ml-2 text-sm text-gundam-white font-light
-}
-
-.admin-nav-sublist li {
-    @apply my-1
-}
-
-.admin-panel-title {
-    @apply text-2xl text-gundam-red mb-5 uppercase
-}
-
-.admin-panel {
-    @apply m-10
-}
-
-.admin-panel hr {
-    @apply border-gundam-red mb-4
-}
-
-.admin-panel-table {
-    @apply w-full mt-5 text-xs
-}
-
-.admin-panel-table-header {
-    @apply h-[40px] bg-gundam-blue text-gundam-yellow font-light
-}
-
-.admin-panel-table-header th, td {
-    @apply px-4
-}
-
-.admin-panel-table-header th:last-child {
-    @apply w-[10%]
-}
-
-.admin-panel-table-header:first-child {
-    @apply text-left;
-}
-
-
-.admin-panel-add-button {
-    @apply bg-gundam-blue text-gundam-white py-3 px-5 float-right mb-5 font-normal text-sm
-}
-
-.admin-panel-button {
-    @apply text-gundam-white rounded-md mx-1 text-center inline-block w-[35px] py-2;
-}
-
-.admin-panel-edit-button {
-    @apply bg-gundam-blue
-}
-
-.admin-panel-delete-button {
-    @apply bg-gundam-red
-}
-
-.admin-panel-table-body td {
-    @apply py-1
-}
-
-.admin-panel-table-body tr:nth-child(even) {
-    @apply bg-gundam-grey bg-opacity-30
-}
-
-.admin-panel-table-body td:last-child {
-    @apply flex align-middle justify-center
-}
-
-.admin-panel-form {
-    @apply text-sm w-full grid-cols-4 grid gap-2
-}
-
-.admin-panel-form section:first-child {
-    @apply col-span-3
-}
-
-
-.admin-panel-form input[type=text] {
-    @apply border border-gundam-blue p-1 bg-gundam-grey bg-opacity-10 w-full
-}
-
-.admin-panel-form input[type=text]:focus {
-    outline: none;
-    @apply border border-gundam-red
-}
-
-.admin-panel-form label {
-    @apply block mt-3 mb-1 text-gundam-blue underline
-}
-
-.admin-panel-form textarea {
-    @apply border border-gundam-blue p-1 bg-gundam-grey bg-opacity-10 w-full h-[150px]
-}
-
-.admin-panel-form textarea:focus {
-    outline: none;
-    @apply border-gundam-red border
-}
-
-.admin-panel-form input[type=file]::file-selector-button {
-    @apply bg-gundam-blue text-gundam-white rounded-none border-none py-2 px-3 hover:cursor-pointer hover:text-gundam-yellow hover:bg-gundam-red
-}
-
-.admin-panel-form input[type=number] {
-    @apply bg-gundam-grey bg-opacity-10 border border-gundam-blue w-full p-1
-}
-
-.admin-panel-form input[type=number]:focus {
-    outline: none;
-    @apply border-gundam-red
-}
-
-.admin-panel-form input[type=submit] {
-    @apply bg-gundam-blue py-2 px-3 mt-3 text-gundam-white hover:cursor-pointer hover:bg-gundam-red hover:text-gundam-yellow
-}

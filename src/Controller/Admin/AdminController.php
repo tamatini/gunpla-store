@@ -10,10 +10,10 @@ use Symfony\Component\Routing\Annotation\Route;
 class AdminController extends AbstractController
 {
     #[Route('/', name: 'index')]
-    public function index() : Response
+    public function index(): Response
     {
         return $this->render('admin/index.html.twig', [
-            'title'=>'Panneau d\'administration'
+            'title' => 'Panneau d\'administration'
         ]);
     }
 }

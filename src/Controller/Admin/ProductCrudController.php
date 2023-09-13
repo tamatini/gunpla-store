@@ -14,11 +14,11 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/admin/product', name:'admin_product_')]
+#[Route('/admin/product', name: 'admin_product_')]
 class ProductCrudController extends AbstractController
 {
     #[Route('/list', name: 'list')]
-    public function list(EntityManagerInterface $entityManager) : Response
+    public function list(EntityManagerInterface $entityManager): Response
     {
         try {
             $products = $entityManager->getRepository(Product::class)->findAll();
@@ -31,17 +31,17 @@ class ProductCrudController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name:'new')]
+    #[Route('/new', name: 'new')]
     public function newProduct(
         EntityManagerInterface $entityManager,
-        Request $request,
-        PictureService $pictureService
-    ) : Response
+        Request                $request,
+        PictureService         $pictureService
+    ): Response
     {
         $product = new Product();
-        $productForm = $this -> createForm(ProductType::class, $product);
-        $productForm -> handleRequest($request);
-        if ($productForm-> isSubmitted() && $productForm->isValid()) {
+        $productForm = $this->createForm(ProductType::class, $product);
+        $productForm->handleRequest($request);
+        if ($productForm->isSubmitted() && $productForm->isValid()) {
             $images = $productForm->get('images')->getData();
             foreach ($images as $image) {
                 $folder = 'products';
@@ -53,22 +53,23 @@ class ProductCrudController extends AbstractController
             $entityManager->persist($product);
             $entityManager->flush();
             $this->addFlash("success", "L'article à bien été rajouter");
-            return $this-> redirectToRoute('admin_product_list');
+            return $this->redirectToRoute('admin_product_list');
         }
         return $this->render('admin/product/new.html.twig', [
-            'title'=>'Ajouter un nouveau produit',
-            'product_form'=>$productForm->createView()
+            'title' => 'Ajouter un nouveau produit',
+            'product_form' => $productForm->createView()
         ]);
     }
 
-    #[Route('/{id}/edit', name:'put')]
+    #[Route('/{id}/edit', name: 'put')]
     public function putProduct(
         EntityManagerInterface $entityManager,
-        Request $request,
-        int $id,
-        PictureService $pictureService
-    ) : Response {
-        $product = $entityManager->getRepository(Product::class)->findOneBy(['id'=>$id]);
+        Request                $request,
+        int                    $id,
+        PictureService         $pictureService
+    ): Response
+    {
+        $product = $entityManager->getRepository(Product::class)->findOneBy(['id' => $id]);
         if (!$product) {
             throw $this->createNotFoundException(
                 'Ce produit n\'existe pas'
@@ -91,19 +92,20 @@ class ProductCrudController extends AbstractController
             return $this->redirectToRoute('product_detail', ['id' => $id]);
         }
         return $this->render('admin/product/edit.html.twig', [
-            'title'=>'Mettre à jour le produit',
-            'product_form'=>$productForm,
-            'product'=>$product
+            'title' => 'Mettre à jour le produit',
+            'product_form' => $productForm,
+            'product' => $product
         ]);
     }
 
     #[Route('/{id}/delete', name: 'delete')]
     public function deleteProduct(
         EntityManagerInterface $entityManager,
-        Product $product,
-        Request $request
-    ) : Response {
-        $cartItems = $entityManager->getRepository(CartItem::class)->findBy(['product'=>$product]);
+        Product                $product,
+        Request                $request
+    ): Response
+    {
+        $cartItems = $entityManager->getRepository(CartItem::class)->findBy(['product' => $product]);
         foreach ($cartItems as $cartItem) {
             $entityManager->remove($cartItem);
         }
@@ -115,13 +117,13 @@ class ProductCrudController extends AbstractController
 
     #[Route('/delete/image/{id}', 'delete_image')]
     public function deleteImage(
-        Images $images,
-        Request $request,
+        Images                 $images,
+        Request                $request,
         EntityManagerInterface $entityManager,
-        PictureService $pictureService
-    ) : Response
+        PictureService         $pictureService
+    ): Response
     {
-        $image = $entityManager->getRepository(Images::class)->findOneBy(['id'=>$images->getId()]);
+        $image = $entityManager->getRepository(Images::class)->findOneBy(['id' => $images->getId()]);
         if ($this->isCsrfTokenValid('delete' . $image->getId(), $request->get('token'))) {
             $name = $image->getName();
             if ($pictureService->deleteImage($name, 'products', 300, 300)) {

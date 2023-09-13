@@ -12,7 +12,8 @@
         {% for image in category.images %}
             <div>
                 <img src="{{ asset('uploads/categories/mini/450x300-' ~image.name) }}" alt="thumbnail">
-                <a href="{{ path('admin_category_delete_image', {'id': image.id}) }}" data-delete data-token="{{ csrf_token('delete' ~image.id) }}">Supprimer</a>
+                <a href="{{ path('admin_category_delete_image', {'id': image.id}) }}" data-delete
+                   data-token="{{ csrf_token('delete' ~image.id) }}">Supprimer</a>
             </div>
         {% endfor %}
     {% endif %}
