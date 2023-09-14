@@ -58,6 +58,10 @@ h2 {
     line-height: 2rem;
 }
 
+section {
+    @apply w-full py-12;
+}
+
 input:not([type="submit"], [type="file"]), textarea {
     @apply p-2 bg-gundam-grey bg-opacity-10
     border-b border-gundam-blue w-full
@@ -67,7 +71,39 @@ input, textarea {
     outline: none;
 }
 
+.home-section-title {
+    @apply mb-8 py-2 border-b-4;
+    font-weight: 700;
+    font-size: 2rem;
+}
+
 /* Style specs */
+
+#home-categories {
+    @apply bg-gundam-white;
+}
+
+#home-categories .home-section-title, #home-categories ul {
+    @apply w-3/5 mx-auto text-gundam-blue;
+}
+
+#home-latest {
+    @apply bg-gundam-blue;
+}
+
+#home-latest h2, #home-latest ul, #home-latest-link {
+    @apply w-3/5 mx-auto;
+}
+
+#home-latest-link {
+    @apply mt-4 text-gundam-yellow text-right hover:text-gundam-white;
+    display: block;
+}
+
+#home-latest h2 {
+    @apply text-gundam-yellow;
+}
+
 .main-section {
     @apply w-4/6 mx-auto shadow-lg px-3
 }
@@ -96,20 +132,12 @@ input, textarea {
     @apply w-full
 }
 
-.section-title {
-    @apply w-3/5 mx-auto;
-}
-
-.section-title h2 {
-    @apply text-gundam-yellow font-extrabold uppercase text-5xl
-}
-
 .section-title a {
     @apply text-xl text-gundam-yellow underline block mt-1
     mb-8 hover:text-gundam-red
 }
 
-.deck {
+.product-deck {
     @apply grid grid-cols-4 w-3/5 mx-auto gap-4;
 }
 

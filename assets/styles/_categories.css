@@ -1,13 +1,13 @@
-.category_deck {
+.category-deck {
     @apply grid grid-cols-3 mx-auto gap-4
 }
 
-.category_deck li {
+.category-deck li {
     @apply relative overflow-hidden border-4 bg-gundam-blue
     border-gundam-blue;
 }
 
-.category_deck img {
+.category-deck img {
     @apply hover:mix-blend-overlay hover:blur-sm
 }
 

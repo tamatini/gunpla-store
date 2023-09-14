@@ -1,0 +1,33 @@
+<li class="card-product">
+    <header class="card-product-header">
+        <a href="{{ path('product_detail', {'id': latestProduct.id}) }}">
+            {% if latestProduct.images is not empty %}
+                <img class="card-product-thumbnail"
+                     src="{{ asset('uploads/products/mini/300x300-' ~ latestProduct.images[0].name) }}"
+                     alt="thumbnail">
+            {% else %}
+                <img class="card-product-thumbnail"
+                     src="{{ asset('images/default-placeholder-300x300.png') }}"
+                     alt="default image">
+            {% endif %}
+        </a>
+    </header>
+    <section class="card-product-content">
+        <a href="{{ path('product_detail', {'id': latestProduct.id }) }}"
+           class="card-product-content-title">{{ latestProduct.reference }}</a>
+        <footer>
+            <p class="card-product-price">{{ latestProduct.sellPrice | number_format(2, '.') }}
+                €</p>
+            {% if latestProduct.stock != 0 %}
+                <a class="card-product-add-cart"
+                   href="{% if is_granted('ROLE_USER') %}
+                         {{ path('product_add_to_cart', {'slug': latestProduct.slug}) }}
+                         {% else %}
+                         {{ path('user_login') }}
+                         {% endif %}">Ajouter au panier</a>
+            {% else %}
+                <a class="card-product-add-cart-disabled">Rupture de stock</a>
+            {% endif %}
+        </footer>
+    </section>
+</li>

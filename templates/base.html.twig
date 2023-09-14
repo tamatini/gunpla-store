@@ -1,8 +1,11 @@
 {% include 'partials/header.html.twig' %}
     <body>
         <header class="nav">
-            {{ include('partials/navbar.html.twig') }}
+            {% include('partials/navbar.html.twig') %}
         </header>
         {% block body %}{% endblock %}
+        <footer>
+            {% include('partials/footer.html.twig') %}
+        </footer>
     </body>
 </html>
