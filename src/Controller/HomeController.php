@@ -2,9 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Category;
 use App\Entity\Product;
-use Doctrine\DBAL\Exception;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -13,7 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class HomeController extends AbstractController
 {
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     #[Route('/', name: 'index')]
     public function index(
@@ -21,9 +22,11 @@ class HomeController extends AbstractController
     ): Response
     {
         $latestProduct = $entityManager->getRepository(Product::class)->findLatestProduct(8);
+        $categories = $entityManager->getRepository(Category::class)->homepageCategory(6);
         return $this->render('home/index.html.twig', [
-            'title'         => 'Accueil',
-            'latestProducts' => $latestProduct
+            'title' => 'Accueil',
+            'latestProducts' => $latestProduct,
+            'categories' => $categories
         ]);
     }
 }

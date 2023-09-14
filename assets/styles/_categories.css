@@ -1,0 +1,19 @@
+.category_deck {
+    @apply grid grid-cols-3 mx-auto gap-4
+}
+
+.category_deck li {
+    @apply relative overflow-hidden border-4 bg-gundam-blue
+    border-gundam-blue;
+}
+
+.category_deck img {
+    @apply hover:mix-blend-overlay hover:blur-sm
+}
+
+.category-name {
+    @apply top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]
+    absolute text-gundam-white opacity-0 group-hover:opacity-100 uppercase
+    group-hover:transition ease-in-out duration-150 group-hover:scale-150;
+}
+

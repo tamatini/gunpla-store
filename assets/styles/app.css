@@ -1,4 +1,5 @@
 @import "_admin.css";
+@import "_categories.css";
 
 @tailwind base;
 @tailwind components;
@@ -96,11 +97,11 @@ input, textarea {
 }
 
 .section-title {
-    @apply w-4/6 mx-auto;
+    @apply w-3/5 mx-auto;
 }
 
 .section-title h2 {
-    @apply text-gundam-white font-extrabold uppercase text-5xl
+    @apply text-gundam-yellow font-extrabold uppercase text-5xl
 }
 
 .section-title a {
@@ -109,11 +110,12 @@ input, textarea {
 }
 
 .deck {
-    @apply grid grid-cols-4 w-4/6 mx-auto gap-5;
+    @apply grid grid-cols-4 w-3/5 mx-auto gap-4;
 }
 
 .card-product {
-    @apply bg-gundam-white overflow-hidden;
+    @apply bg-gundam-white overflow-hidden border-4
+    border-gundam-yellow;
 }
 
 .card-product-header {
@@ -133,7 +135,7 @@ input, textarea {
 }
 
 .card-product-price {
-    @apply text-3xl font-bold mt-2 text-gundam-red;
+    @apply text-xl font-bold mt-2 text-gundam-red;
 }
 
 .card-product-add-cart {
@@ -168,7 +170,8 @@ input, textarea {
 
 .nav-submenu {
     @apply bg-gundam-white transform scale-0 group-hover:scale-100 absolute mt-2
-    transition duration-150 ease-in-out origin-top shadow-2xl border-t-2 border-t-gundam-red;
+    transition duration-150 ease-in-out origin-top shadow-2xl border-t-2
+    border-t-gundam-red;
 }
 
 .sub-menu-group {
@@ -180,8 +183,8 @@ input, textarea {
 }
 
 .sub-nav {
-    @apply text-left py-3 px-2 hover:text-gundam-yellow hover:underline hover:bg-gundam-red
-    hover:transition duration-75 ease-in-out;
+    @apply text-left py-3 px-2 hover:text-gundam-yellow hover:underline
+    hover:bg-gundam-red hover:transition duration-75 ease-in-out;
 }
 
 .nav-menu-icon {
@@ -189,7 +192,8 @@ input, textarea {
 }
 
 .nav-menu-icon-qty {
-    @apply text-xs absolute top-2 left-4 bg-gundam-red p-1 px-1.5 text-gundam-yellow rounded-full;
+    @apply text-xs absolute top-2 left-4 bg-gundam-red p-1 px-1.5
+    text-gundam-yellow rounded-full;
 }
 
 .nav-cart-item {

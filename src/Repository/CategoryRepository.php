@@ -22,7 +22,8 @@ class CategoryRepository extends ServiceEntityRepository
         parent::__construct($registry, Category::class);
     }
 
-    public function findHomePageCategory() : array {
+    public function findHomePageCategory(): array
+    {
         return $this->createQueryBuilder('c')
             ->orderBy('c.name', 'ASC')
             ->setMaxResults(6)
@@ -33,7 +34,7 @@ class CategoryRepository extends ServiceEntityRepository
     /**
      * @throws NonUniqueResultException
      */
-    public function findOneById(int $id) : ?Category
+    public function findOneById(int $id): ?Category
     {
         return $this->createQueryBuilder('c')
             ->where('c.id = :id')
@@ -41,5 +42,13 @@ class CategoryRepository extends ServiceEntityRepository
             ->getQuery()
             ->setMaxResults(1)
             ->getOneOrNullResult();
+    }
+
+    public function homepageCategory(int $quantity): array
+    {
+        return $this->createQueryBuilder('c')
+            ->setMaxResults($quantity)
+            ->getQuery()
+            ->getResult();
     }
 }

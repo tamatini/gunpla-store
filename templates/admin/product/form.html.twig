@@ -4,37 +4,39 @@
         'autocomplete': 'off'
     }
 }) }}
-    <section>
-        {{ form_row(product_form.reference) }}
-        {{ form_row(product_form.slug) }}
-        {{ form_row(product_form.description) }}
-        <div class="grid grid-cols-2 gap-2">
-            {{ form_row(product_form.weight) }}
-            {{ form_row(product_form.width) }}
-        </div>
+<section>
+    {{ form_row(product_form.reference) }}
+    {{ form_row(product_form.slug) }}
+    {{ form_row(product_form.description) }}
+    <div class="grid grid-cols-2 gap-2">
+        {{ form_row(product_form.weight) }}
+        {{ form_row(product_form.width) }}
+    </div>
+    <div class="grid-cols-2 grid gap-2">
+        {{ form_row(product_form.height) }}
+        {{ form_row(product_form.length) }}
+    </div>
+    <input type="submit" value="Valider">
+</section>
+<section>
+    {{ form_row(product_form.sellPrice) }}
+    {{ form_row(product_form.stock) }}
+    {{ form_row(product_form.scale) }}
+    {{ form_row(product_form.images) }}
+    {% if app.request.attributes.get('_route') == 'admin_product_put' %}
+        <h2 class="my-2 text-gundam-blue underline text-sm">Thumbnails : </h2>
         <div class="grid-cols-2 grid gap-2">
-            {{ form_row(product_form.height) }}
-            {{ form_row(product_form.length) }}
+            {% for image in product.images %}
+                <div class="relative border border-gundam-red">
+                    <a class="absolute right-3 top-1 text-gundam-white text-lg bg-gundam-red py-1 px-3  rounded-full"
+                       href="{{ path('admin_product_delete_image', {'id': image.id }) }}" data-delete
+                       data-token="{{ csrf_token('delete' ~image.id) }}">
+                        <i class="fa-solid fa-trash"></i>
+                    </a>
+                    <img src="{{ asset('uploads/products/mini/300x300-' ~image.name) }}" alt="thumbnail">
+                </div>
+            {% endfor %}
         </div>
-        <input type="submit" value="submit">
-    </section>
-    <section>
-        {{ form_row(product_form.sellPrice) }}
-        {{ form_row(product_form.stock) }}
-        {{ form_row(product_form.scale) }}
-        {{ form_row(product_form.images) }}
-        {% if app.request.attributes.get('_route') == 'admin_product_put' %}
-            <h2 class="my-2 text-gundam-blue underline text-sm">Thumbnails : </h2>
-            <div class="grid-cols-2 grid gap-2">
-                {% for image in product.images %}
-                    <div class="relative border border-gundam-red">
-                        <a class="absolute right-3 top-1 text-gundam-white text-lg bg-gundam-red py-1 px-3  rounded-full" href="{{ path('admin_product_delete_image', {'id': image.id }) }}" data-delete data-token="{{ csrf_token('delete' ~image.id) }}">
-                            <i class="fa-solid fa-trash"></i>
-                        </a>
-                        <img src="{{ asset('uploads/products/mini/300x300-' ~image.name) }}" alt="thumbnail">
-                    </div>
-                {% endfor %}
-            </div>
-        {% endif %}
-    </section>
+    {% endif %}
+</section>
 {{ form_end(product_form) }}

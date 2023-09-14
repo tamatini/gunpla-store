@@ -1,58 +1,66 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-<main>
-    <section class="w-full py-0">
-        <img class="" src="{{ asset('images/banner/bandeau_gundam_virtue.jpg.webp') }}" alt="gundam virtue">
-    </section>
-    <section class="pb-96">
-        <div class="w-4/6 mx-auto">
-            <h2>Categories</h2>
+    <main>
+        <section class="w-full py-0">
+            <img class="" src="{{ asset('images/banner/bandeau_gundam_virtue.jpg.webp') }}" alt="gundam virtue">
+        </section>
+        <section class="w-3/5 mx-auto py-12">
+            <h2 class="text-gundam-blue mb-8 py-2 text-5xl border-b-4 font-[700]">Catégories</h2>
+            <ul class="category_deck">
+                {% for category in categories %}
+                    {% include 'home/_categoryCard.html.twig' with {category: category} only %}
+                {% endfor %}
+            </ul>
+        </section>
 
-        </div>
-    </section>
+        <!-- Latest product section -->
+        <section id="latest_product" class="bg-gundam-blue py-8">
+            <!-- section header -->
+            <header class="section-title">
+                <h2>Nouveautés!</h2>
+                <a href="{{ path('product_index') }}">Nos derniers arrivages > </a>
+            </header>
 
-    <!-- Latest product section -->
-    <section id="latest_product" class="bg-gundam-blue py-8">
-        <!-- section header -->
-        <header class="section-title">
-            <h2>Nouveautés!</h2>
-            <a href="{{ path('product_index') }}">Nos derniers arrivages > </a>
-        </header>
-
-        <!-- Card deck -->
-        <ul class="deck">
-            {% for latestProduct in latestProducts %}
-                <!-- Card -->
-                <li class="card-product">
+            <!-- Card deck -->
+            <ul class="deck">
+                {% for latestProduct in latestProducts %}
+                    <!-- Card -->
+                    <li class="card-product">
                         <header class="card-product-header">
                             <a href="{{ path('product_detail', {'id': latestProduct.id}) }}">
                                 {% if latestProduct.images is not empty %}
-                                    <img class="card-product-thumbnail" src="{{ asset('uploads/products/mini/300x300-' ~ latestProduct.images[0].name) }}" alt="thumbnail">
+                                    <img class="card-product-thumbnail"
+                                         src="{{ asset('uploads/products/mini/300x300-' ~ latestProduct.images[0].name) }}"
+                                         alt="thumbnail">
                                 {% else %}
-                                    <img class="card-product-thumbnail" src="{{ asset('images/default-placeholder-300x300.png') }}" alt="default image">
+                                    <img class="card-product-thumbnail"
+                                         src="{{ asset('images/default-placeholder-300x300.png') }}"
+                                         alt="default image">
                                 {% endif %}
                             </a>
                         </header>
-                    <section class="card-product-content">
-                        <a href="{{ path('product_detail', {'id': latestProduct.id }) }}" class="card-product-content-title">{{ latestProduct.reference }}</a>
-                        <footer>
-                            <p class="card-product-price">{{ latestProduct.sellPrice | number_format(2, '.') }} €</p>
-                            {% if latestProduct.stock != 0 %}
-                                <a class="card-product-add-cart" href="
+                        <section class="card-product-content">
+                            <a href="{{ path('product_detail', {'id': latestProduct.id }) }}"
+                               class="card-product-content-title">{{ latestProduct.reference }}</a>
+                            <footer>
+                                <p class="card-product-price">{{ latestProduct.sellPrice | number_format(2, '.') }}
+                                    €</p>
+                                {% if latestProduct.stock != 0 %}
+                                    <a class="card-product-add-cart" href="
                                     {% if is_granted('ROLE_USER') %}
-                                        {{ path('product_add_to_cart', {'slug': latestProduct.slug})  }}
+                                        {{ path('product_add_to_cart', {'slug': latestProduct.slug}) }}
                                     {% else %}
                                         {{ path('user_login') }}
                                     {% endif %}">Ajouter au panier</a>
-                            {% else %}
-                                <a class="card-product-add-cart-disabled" >Rupture de stock</a>
-                            {% endif %}
-                        </footer>
-                    </section>
-                </li>
-            {% endfor %}
-        </ul>
-    </section>
-</main>
+                                {% else %}
+                                    <a class="card-product-add-cart-disabled">Rupture de stock</a>
+                                {% endif %}
+                            </footer>
+                        </section>
+                    </li>
+                {% endfor %}
+            </ul>
+        </section>
+    </main>
 {% endblock %}

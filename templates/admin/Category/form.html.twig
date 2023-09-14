@@ -4,19 +4,24 @@
         'autocomplete': 'off'
     }
 }) }}
+<section>
     {{ form_row(category_form.name) }}
     {{ form_row(category_form.slug) }}
     {{ form_row(category_form.description) }}
     {% if app.request.attributes.get('_route') == 'admin_category_put' %}
-        <h2>Thumbnail</h2>
-        {% for image in category.images %}
-            <div>
-                <img src="{{ asset('uploads/categories/mini/450x300-' ~image.name) }}" alt="thumbnail">
-                <a href="{{ path('admin_category_delete_image', {'id': image.id}) }}" data-delete
-                   data-token="{{ csrf_token('delete' ~image.id) }}">Supprimer</a>
-            </div>
-        {% endfor %}
+        {% if category.images is not empty %}
+            <h2>Thumbnail</h2>
+            {% for image in category.images %}
+                <div>
+                    <img src="{{ asset('uploads/categories/mini/450x300-' ~image.name) }}" alt="thumbnail">
+                    <a href="{{ path('admin_category_delete_image', {'id': image.id}) }}" data-delete
+                       data-token="{{ csrf_token('delete' ~image.id) }}">Supprimer</a>
+                </div>
+            {% endfor %}
+        {% endif %}
     {% endif %}
     {{ form_row(category_form.images) }}
-<input type="submit" value="Valider">
+    <input type="submit" value="Valider">
+
+</section>
 {{ form_end(category_form) }}
