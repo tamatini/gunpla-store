@@ -18,7 +18,7 @@
                     <tr>
                         <td>{{ product.reference }}</td>
                         <td>{{ product.stock }}</td>
-                        <td>{{ product.sell_price|number_format(2, '.') }} €</td>
+                        <td>{{ product.sellPrice|number_format(2, '.') }} €</td>
                         <td>
                             <a class="admin-panel-button admin-panel-edit-button" href="{{ path('admin_product_put', {'id': product.id}) }}">
                                 <i class="fa-solid fa-pen"></i>

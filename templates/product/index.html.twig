@@ -1,5 +1,14 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-
+    <div class="grid grid-cols-4 w-3/5 mx-auto">
+        <aside>
+            {% include('product/_searchForm.html.twig') with {searchForm: searchForm} only %}
+        </aside>
+        <section class="col-span-3">
+            {% for product in products %}
+                <h2>{{ product.reference }}</h2>
+            {% endfor %}
+        </section>
+    </div>
 {% endblock %}

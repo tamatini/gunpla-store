@@ -2,7 +2,9 @@
 
 namespace App\Form;
 
+use App\Entity\Category;
 use App\Entity\Product;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
@@ -19,6 +21,10 @@ class ProductType extends AbstractType
         $builder
             ->add('reference', TextType::class, [
                 "label" => "Référence"
+            ])
+            ->add('category', EntityType::class, [
+                'class'=>Category::class,
+                'mapped'=>true
             ])
             ->add('slug', TextType::class, [
                 "label" => "Slug"

@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Data\SearchData;
 use App\Entity\Product;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\DBAL\Exception;
@@ -13,7 +14,7 @@ use Doctrine\Persistence\ManagerRegistry;
  *
  * @method Product|null find($id, $lockMode = null, $lockVersion = null)
  * @method Product|null findOneBy(array $criteria, array $orderBy = null)
- //* @method Product[]    findAll()
+ * @method Product[]    findAll()
  * @method Product[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
 class ProductRepository extends ServiceEntityRepository
@@ -28,7 +29,7 @@ class ProductRepository extends ServiceEntityRepository
      * @return Product|null Returns a single product depending on slug
      * @throws NonUniqueResultException
      */
-    public function findBySlug($slug) : ?Product
+    public function findBySlug($slug): ?Product
     {
         return $this->createQueryBuilder("p")
             ->where("p.slug = :slug")
@@ -38,26 +39,38 @@ class ProductRepository extends ServiceEntityRepository
     }
 
     /**
-     * @return Product[] Returns an array of containing all products
-     * @throws Exception
-     */
-    public function findAll() : array {
-        $request = "SELECT * FROM product";
-        $conn = $this->getEntityManager()->getConnection();
-        $stmt = $conn->prepare($request);
-        $result = $stmt->executeQuery();
-        return $result->fetchAllAssociative();
-    }
-
-    /**
      * @return Product[] Returns an array of latest products
      */
-    public function findLatestProduct(?int $maxResult=5) : array
+    public function findLatestProduct(?int $maxResult = 5): array
     {
         return $this->createQueryBuilder("p")
             ->orderBy("p.createdAt", "DESC")
             ->setMaxResults($maxResult)
             ->getQuery()
             ->getResult();
+    }
+
+    /**
+     * @return Product[]
+     */
+    public function findSearch(SearchData $searchData): array
+    {
+        $query = $this
+            ->createQueryBuilder('p')
+            ->select('c', 'p')
+            ->join('p.category', 'c');
+
+        if (!empty($searchData->search)) {
+            $query = $query
+                -> andWhere('p.reference LIKE :search')
+                ->setParameter('search', "%{$searchData->search}%");
+        }
+
+        if (!empty($searchData->categories)) {
+            $query = $query
+                ->andWhere('p.category IN (:categories)')
+                ->setParameter('categories', $searchData->categories);
+        }
+        return $query->getQuery()->getResult();
     }
 }
