@@ -1,5 +1,5 @@
 <li class="category-list group">
-    <a href="#">
+    <a href="{{ path('product_index')~'?categories%5B%5D='~category.id | url_encode }}">
         <img src="{{ asset('uploads/categories/' ~category.images[0].name ) }}" alt="category thumbnail">
         <span class="category-name">{{ category.name }}</span>
     </a>

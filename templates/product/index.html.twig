@@ -5,10 +5,16 @@
         <aside>
             {% include('product/_searchForm.html.twig') with {searchForm: searchForm} only %}
         </aside>
-        <section class="col-span-3">
-            {% for product in products %}
-                <h2>{{ product.reference }}</h2>
-            {% endfor %}
+        <section class="col-span-3 p-3">
+            <ul class="grid grid-cols-3">
+                {% if products is not empty %}
+                    {% for product in products %}
+                        {% include('product/_productCard.html.twig' ) with {'product': product} only %}
+                    {% endfor %}
+                {% else %}
+                    <li>Il n'y a aucun résultat</li>
+                {% endif %}
+            </ul>
         </section>
     </div>
 {% endblock %}
