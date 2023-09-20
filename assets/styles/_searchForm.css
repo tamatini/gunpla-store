@@ -1,0 +1,19 @@
+.search_form {
+    @apply mt-3
+}
+
+.search_form input {
+    @apply my-1
+}
+
+.search_form .search_category {
+    @apply flex content-between w-full
+}
+
+.search_category label {
+    @apply mt-0 w-[90%]
+}
+
+.search_category input[type=checkbox] {
+    @apply float-right w-[2em]
+}

@@ -1,5 +1,6 @@
 @import "_admin.css";
 @import "_categories.css";
+@import "_searchForm.css";
 
 @tailwind base;
 @tailwind components;
@@ -75,6 +76,11 @@ input, textarea {
     @apply mb-8 py-2 border-b-4;
     font-weight: 700;
     font-size: 2rem;
+}
+
+.gundam_button {
+    @apply w-full block py-2 mt-2 bg-gundam-blue text-gundam-white hover:bg-gundam-red hover:text-gundam-yellow;
+    font-size: 1.2rem;
 }
 
 /* Style specs */

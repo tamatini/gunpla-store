@@ -28,7 +28,7 @@ class SearchType extends AbstractType
                 'required'=>false,
                 'class'=>Category::class,
                 'expanded'=>true,
-                'multiple'=>true
+                'multiple'=>true,
             ])
             ->add('min', NumberType::class, [
                 'label'=>false,

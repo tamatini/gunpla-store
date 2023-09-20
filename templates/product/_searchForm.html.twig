@@ -1,3 +1,15 @@
-{{ form_start(searchForm) }}
-<button type="submit">Filrer</button>
+{{ form_start(searchForm, {'attr': {
+    'class': 'search_form' }}) }}
+    {{ form_row(searchForm.search) }}
+    <div>
+        {% for category in searchForm.categories %}
+            <div class="search_category">
+                {{ form_label(category) }}
+                {{ form_widget(category) }}
+            </div>
+        {% endfor %}
+    </div>
+    {{ form_row(searchForm.min) }}
+    {{ form_row(searchForm.max) }}
+    <button class="gundam_button" type="submit">Filtrer</button>
 {{ form_end(searchForm) }}
