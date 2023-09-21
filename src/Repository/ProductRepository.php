@@ -7,6 +7,7 @@ use App\Entity\Product;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\DBAL\Exception;
 use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -55,6 +56,25 @@ class ProductRepository extends ServiceEntityRepository
      */
     public function findSearch(SearchData $searchData): array
     {
+        return $this->getSearchQuery($searchData)->getQuery()->getResult();
+    }
+
+    /**
+     * Return min and max price range depending on search query
+     * @param SearchData $search
+     * @return int[]
+     */
+    public function findMinMax(SearchData $searchData): array
+    {
+        $query = $this->getSearchQuery($searchData, true)
+            ->select('MIN(p.sellPrice) as min', 'MAX(p.sellPrice) as max')
+            ->getQuery()
+            ->getScalarResult();
+        return [(int)$query[0]['min'], (int)$query[0]['max']];
+    }
+
+    private function getSearchQuery(SearchData $searchData, $ignorePrice = false): QueryBuilder
+    {
         $query = $this
             ->createQueryBuilder('p')
             ->select('c', 'p')
@@ -71,6 +91,19 @@ class ProductRepository extends ServiceEntityRepository
                 ->andWhere('p.category IN (:categories)')
                 ->setParameter('categories', $searchData->categories);
         }
-        return $query->getQuery()->getResult();
+
+        if (!empty($searchData->min) && $ignorePrice === false) {
+            $query = $query
+                ->andWhere('p.sellPrice >= :min')
+                ->setParameter('min', $searchData->min);
+        }
+
+        if (!empty($searchData->max) && $ignorePrice === false) {
+            $query = $query
+                ->andWhere('p.sellPrice <= :max')
+                ->setParameter('max', $searchData->max);
+        }
+
+        return $query;
     }
 }

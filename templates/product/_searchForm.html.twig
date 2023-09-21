@@ -1,7 +1,8 @@
 {{ form_start(searchForm, {'attr': {
     'class': 'search_form' }}) }}
     {{ form_row(searchForm.search) }}
-    <div>
+    <div class="mt-4">
+        <h3 class="text-gundam-red">Categories</h3>
         {% for category in searchForm.categories %}
             <div class="search_category">
                 {{ form_label(category) }}
@@ -9,7 +10,15 @@
             </div>
         {% endfor %}
     </div>
-    {{ form_row(searchForm.min) }}
-    {{ form_row(searchForm.max) }}
+    <div class="mt-4">
+        <h3 class="text-gundam-red">Prix</h3>
+        <div class="grid grid-cols-2 gap-4 mb-2">
+            {{ form_row(searchForm.min) }}
+            {{ form_row(searchForm.max) }}
+        </div>
+    </div>
+    <div id="price_slider" class="block mb-4" data-min="{{ min }}" data-max="{{ max }}">
+
+    </div>
     <button class="gundam_button" type="submit">Filtrer</button>
 {{ form_end(searchForm) }}

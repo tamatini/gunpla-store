@@ -3,7 +3,7 @@
 {% block body %}
     <div class="grid grid-cols-4 w-3/5 mx-auto">
         <aside>
-            {% include('product/_searchForm.html.twig') with {searchForm: searchForm} only %}
+            {% include('product/_searchForm.html.twig') with {searchForm: searchForm, min: min, max: max} only %}
         </aside>
         <section class="col-span-3 p-3">
             <ul class="grid grid-cols-3">
