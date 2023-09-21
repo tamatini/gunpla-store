@@ -17,3 +17,22 @@
 .search_category input[type=checkbox] {
     @apply float-right w-[2em]
 }
+
+.search_form .noUi-handle {
+    width: 20px;
+    height: 20px;
+    top: -3px;
+    right: -10px;
+    border: none;
+    box-shadow: none;
+    @apply rounded-full bg-gundam-blue
+}
+
+.search_form .noUi-handle::before, .search_form .noUi-handle::after {
+    height: 0;
+    width: 0;
+}
+
+.search_form .noUi-connect {
+    @apply bg-gundam-yellow
+}
