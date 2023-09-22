@@ -2,8 +2,8 @@
 
 {% block body %}
     <main>
-        <section class="py-0">
-            <img src="{{ asset('images/banner/bandeau_gundam_virtue.jpg.webp') }}" alt="gundam virtue">
+        <section class="banner-section">
+            <img class="banner-image" src="{{ asset('images/banner/bandeau_gundam_virtue.jpg.webp') }}" alt="gundam virtue">
         </section>
         <section id="home-categories">
             <h2 class="home-section-title">Catégories</h2>
@@ -22,5 +22,6 @@
             </ul>
             <a id="home-latest-link" href="{{ path('product_index') }}">Nos derniers arrivages <i class="fa-solid fa-arrow-right"></i></a>
         </section>
+        {{ include('partials/informations.html.twig') }}
     </main>
 {% endblock %}

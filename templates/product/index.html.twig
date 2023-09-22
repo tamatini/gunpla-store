@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <div class="grid grid-cols-4 w-3/5 mx-auto">
+    <div class="grid grid-cols-4 w-3/5 mx-auto mb-20">
         <aside>
             {% include('product/_searchForm.html.twig') with {searchForm: searchForm, min: min, max: max} only %}
         </aside>

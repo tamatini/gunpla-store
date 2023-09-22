@@ -85,6 +85,15 @@ input, textarea {
 
 /* Style specs */
 
+.banner-section {
+    @apply w-full py-0;
+    background: black;
+}
+
+.banner-image {
+    @apply w-3/5 mx-auto
+}
+
 #home-categories {
     @apply bg-gundam-white;
 }
@@ -123,8 +132,16 @@ input, textarea {
 }
 
 .content-image-list {
-    @apply flex overflow-x-auto flex-nowrap;
+    @apply flex overflow-x-auto flex-nowrap pb-2;
+}
 
+.content-image-list::-webkit-scrollbar {
+    @apply bg-gundam-grey;
+    height: 10px;
+}
+
+.content-image-list::-webkit-scrollbar-thumb {
+    @apply bg-gundam-blue
 }
 
 .detail-image {
