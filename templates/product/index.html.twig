@@ -6,7 +6,7 @@
             {% include('product/_searchForm.html.twig') with {searchForm: searchForm, min: min, max: max} only %}
         </aside>
         <section class="col-span-3 p-3">
-            <ul class="grid grid-cols-3">
+            <ul class="grid grid-cols-3 gap-3">
                 {% if products is not empty %}
                     {% for product in products %}
                         {% include('product/_productCard.html.twig' ) with {'product': product} only %}

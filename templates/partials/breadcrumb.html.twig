@@ -6,7 +6,7 @@
     } %}
 
     <nav aria-label="Breadcrumb">
-        <ol>
+        <ol class="flex text-gundam-blue border-b py-2">
             {%- for item in items -%}
                 {% set ld_item = {
                     '@type': 'ListItem',
@@ -15,9 +15,9 @@
                 } %}
                 {% set active = loop.last %}
                 {% set active_class = active ? ' active' %}
-                <li class="{{ active_class }}" {% if active %} aria-current="page" {% endif %}>
+                <li class="{{ active_class }} ml-2" {% if active %} aria-current="page" {% endif %}>
                     {% if item.url is defined %}
-                        <a href="{{ item.url }}">{{ item.text }}</a>
+                        <a href="{{ item.url }}">{{ item.text }} > </a>
                         {% set ld_item = ld_item|merge({'item': item.url})%}
                     {% else %}
                         {{ item.text }}

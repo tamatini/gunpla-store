@@ -37,3 +37,21 @@ if (slider) {
         }
     })
 }
+
+// Change detail page selected image
+const images = document.querySelectorAll('.detail-image');
+const mainImage = document.querySelector('#main-image');
+
+for (let image in images) {
+    const img = images[image];
+    images[0].classList.add('active-detail-image')
+    img.addEventListener('click', function () {
+        let active = 'active-detail-image';
+        let activeImage = document.querySelector('.'+ active);
+        let name = img.dataset.name;
+        mainImage.src = "/uploads/products/" + name;
+        activeImage.classList.remove(active);
+        img.classList.add(active)
+    });
+}
+

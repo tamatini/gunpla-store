@@ -118,8 +118,23 @@ input, textarea {
     @apply grid-cols-2 grid gap-0
 }
 
+.content section {
+    @apply pt-0;
+}
+
 .content-image-list {
-    @apply grid grid-cols-5 gap-2 mt-2
+    @apply flex overflow-x-auto flex-nowrap;
+
+}
+
+.detail-image {
+    width: 100px;
+    box-sizing: border-box;
+    transition: 100ms all .1s;
+}
+
+.active-detail-image {
+    @apply border-4 border-gundam-blue
 }
 
 .content-detail {
@@ -131,12 +146,18 @@ input, textarea {
 }
 
 .content-title {
-    @apply text-gundam-red mb-5
+    @apply text-gundam-red mb-5 mt-1;
+    font-size: 1rem;
+    line-height: 1.4rem;
 }
 
 .selected-image {
-    @apply w-full
+    @apply w-full;
+    height: 450px;
+    object-fit: contain;
 }
+
+
 
 .section-title a {
     @apply text-xl text-gundam-yellow underline block mt-1

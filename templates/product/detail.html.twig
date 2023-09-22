@@ -6,17 +6,17 @@
         {{ breadcrumbs.render([
             {'url': url('home_index'), text: 'Accueil'},
             {'url': url('product_index'), text: 'Boutique'},
-            {'url': url('product_detail', {'id': product.id}), text: product.reference}
+            {text: product.reference}
         ]) }}
 
         <article class="content">
             <section>
                 {% set index = 0 %}
                 {% if product.images is not empty %}
-                    <img class="selected-image" src="{{ asset('uploads/products/mini/300x300-'~product.images[index].name) }}" alt="{{ product.images[index].name }}">
+                    <img id="main-image" class="selected-image" src="{{ asset('uploads/products/'~product.images[index].name) }}" alt="{{ product.images[index].name }}">
                     <div class="content-image-list">
                         {% for image in product.images %}
-                            <img src="{{ asset('uploads/products/mini/300x300-'~image.name) }}" alt="thumbnail gundam" onclick="{% set index = loop.index %}">
+                            <img class="detail-image" src="{{ asset('uploads/products/mini/300x300-'~image.name) }}" data-name="{{ image.name }}" alt="thumbnail gundam" onclick="{% set index = loop.index %}">
                         {% endfor %}
                     </div>
                 {% else %}
