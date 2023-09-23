@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Data\SearchData;
 use App\Entity\Product;
+use App\Form\CartType;
 use App\Form\SearchType;
 use App\Service\CartItemService;
 use App\Service\ShoppingCartService;
@@ -24,7 +25,7 @@ class ProductController extends AbstractController
     #[Route('/', name: 'index')]
     public function productIndex(
         EntityManagerInterface $entityManager,
-        Request $request
+        Request                $request
     ): Response
     {
         $data = new SearchData();
@@ -36,8 +37,8 @@ class ProductController extends AbstractController
             'title' => "Tous les produits",
             'products' => $products,
             'searchForm' => $searchForm->createView(),
-            'min'=>$min,
-            'max'=>$max
+            'min' => $min,
+            'max' => $max
         ]);
     }
 
@@ -49,16 +50,19 @@ class ProductController extends AbstractController
     #[Route('/{id}', name: 'detail')]
     public function getProduct(
         EntityManagerInterface $entityManager,
-        int                    $id
+        int                    $id,
+        Request                $request,
     ): Response
     {
         $product = $entityManager->getRepository(Product::class)->findOneBy(['id' => $id]);
         if (!$product) {
             throw $this->createNotFoundException('Ce produit n\'existe pas');
         }
+        $addToCartForm = $this->createForm(CartType::class);
         return $this->render('product/detail.html.twig', [
             'title' => $product->getReference(),
-            'product' => $product
+            'product' => $product,
+            'addToCartForm' => $addToCartForm->createView()
         ]);
     }
 

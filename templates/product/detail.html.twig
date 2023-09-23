@@ -39,7 +39,16 @@
                     <li class="content-text">Taille: {{ product.scale }}</li>
                     <li class="content-text">Emballage/poids: {{ product.length }}cm(L) x {{ product.width }}cm(l) x {{ product.height }}cm(H) / {{ product.weight }}g</li>
                 </ul>
-                <a class="card-product-add-cart" href="">Ajouter au panier</a>
+                {{ form_start(addToCartForm, {'attr': {
+                    'class': 'flex mt-10'
+                }}) }}
+                    {{ form_widget(addToCartForm.quantity, {'attr': {
+                        'class': 'add-quantity',
+                        'min': 0,
+                        'max': product.stock
+                    }}) }}
+                    {{ form_widget(addToCartForm.submit) }}
+                {{ form_end(addToCartForm) }}
             </section>
         </article>
         <hr class="my-5">

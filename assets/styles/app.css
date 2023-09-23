@@ -359,3 +359,14 @@ form section {
     @apply w-full bg-gundam-red py-3 px-3
 }
 
+.content-detail form .add-quantity {
+    width: 60px;
+    text-align: right;
+    padding: 5px;
+    margin-right: 10px;
+}
+
+.content-detail form #cart_submit {
+    margin-top: 0;
+}
+
