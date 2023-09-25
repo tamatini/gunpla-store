@@ -11,19 +11,6 @@
 
 /* Font imports */
 @font-face {
-    font-family: 'Plavsky';
-    src: url("../fonts/Plavsky.otf") format("truetype");
-    font-weight: 400;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'Plavsky';
-    src: url("../fonts/Plavsky Bold.otf") format("truetype");
-    font-weight: 700;
-}
-
-@font-face {
     font-family: "Roboto-Regular";
     src: url("../fonts/Roboto-Regular.ttf") format("opentype");
     font-weight: normal;
@@ -59,7 +46,7 @@ label {
 h1, h2, h3 {
     font-family: "Montserrat-Bold", sans-serif;
     font-weight: 700;
-    text-transform: uppercase;
+    text-transform: capitalize;
 }
 
 h1 {
@@ -68,8 +55,13 @@ h1 {
 }
 
 h2 {
+    @apply text-gundam-blue;
     font-size: 1rem;
     line-height: 2rem;
+}
+
+h3 {
+    font-size: 1.2em;
 }
 
 section {
@@ -86,9 +78,9 @@ input, textarea {
 }
 
 .home-section-title {
-    @apply mb-8 py-2 border-b-4;
+    @apply mb-5;
     font-weight: 700;
-    font-size: 2rem;
+    font-size: 1.4em;
 }
 
 .gundam_button {
@@ -99,12 +91,11 @@ input, textarea {
 /* Style specs */
 
 .banner-section {
-    @apply w-full py-0;
-    background: black;
+    @apply w-full mt-5 py-0;
 }
 
 .banner-image {
-    @apply w-3/5 mx-auto
+    @apply w-3/5 mx-auto rounded-3xl
 }
 
 #home-categories {
@@ -116,20 +107,21 @@ input, textarea {
 }
 
 #home-latest {
-    @apply bg-gundam-blue;
+ text-align: center;
 }
 
-#home-latest h2, #home-latest ul, #home-latest-link {
+#home-latest h2, #home-latest ul {
     @apply w-3/5 mx-auto;
 }
 
-#home-latest-link {
-    @apply mt-4 text-gundam-yellow text-right hover:text-gundam-white;
-    display: block;
+#home-latest h2 {
+    text-align: left;
 }
 
-#home-latest h2 {
-    @apply text-gundam-yellow;
+#home-latest-link {
+    @apply mt-4 text-gundam-white bg-gundam-blue text-center rounded-xl hover:bg-gundam-red
+    hover:text-gundam-yellow py-3 px-5 text-lg;
+
 }
 
 .main-section {
@@ -182,7 +174,7 @@ input, textarea {
 }
 
 .selected-image {
-    @apply w-full;
+    @apply w-full bg-gundam-grey;
     height: 450px;
     object-fit: contain;
 }
@@ -199,8 +191,8 @@ input, textarea {
 }
 
 .card-product {
-    @apply bg-gundam-white overflow-hidden border-4
-    border-gundam-yellow;
+    @apply bg-gundam-white overflow-hidden border-2 rounded-xl
+    border-gundam-blue;
 }
 
 .card-product-header {
@@ -208,37 +200,37 @@ input, textarea {
 }
 
 .card-product-thumbnail {
-    @apply hover:scale-125 hover:transition ease-in-out duration-150 w-full
+    @apply hover:scale-110 hover:transition ease-in-out duration-150 w-full
 }
 
 .card-product-content {
-    @apply p-2;
+    @apply p-2 text-left;
 }
 
-.card-product-content-title {
-    @apply uppercase hover:underline;
+.card-product .card-product-content .card-product-content-title {
+    @apply hover:underline font-bold;
 }
 
 .card-product-price {
-    @apply text-xl font-bold mt-2 text-gundam-red;
+    @apply text-base font-bold mt-2 text-gundam-blue;
 }
 
 .card-product-add-cart {
     @apply text-center bg-gundam-blue text-gundam-white
-    block text-lg p-2 mt-4 hover:bg-gundam-red hover:text-gundam-yellow
+    block text-base p-2 mt-4 hover:bg-gundam-red hover:text-gundam-yellow rounded-md
 }
 
 .card-product-add-cart-disabled {
     @apply text-center bg-gundam-grey text-gundam-white
-    block text-lg p-2 mt-4 cursor-not-allowed
+    block text-lg p-2 mt-4 cursor-not-allowed rounded-xl
 }
 
 .nav {
-    @apply w-full bg-gundam-white h-16 shadow-md
+    @apply w-full bg-gundam-white h-16 border-b border-gundam-red
 }
 
 .navbar {
-    @apply w-4/6 text-center flex-row flex mx-auto justify-between h-full;
+    @apply w-3/5 text-center flex-row flex mx-auto justify-between h-full;
 }
 
 .navlink {

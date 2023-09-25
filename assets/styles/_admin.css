@@ -32,10 +32,11 @@
 
 .admin-panel-title {
     @apply text-gundam-red mt-1;
+    font-size: 1em;
 }
 
 .admin-panel {
-    @apply mx-10 p-0;
+    @apply m-0 p-0 px-5 box-border ;
 }
 
 .admin-panel hr {

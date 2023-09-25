@@ -1,19 +1,26 @@
 .category-deck {
-    @apply grid grid-cols-3 mx-auto gap-4
+    @apply flex justify-between
 }
 
 .category-deck li {
-    @apply relative overflow-hidden border-4 bg-gundam-blue
-    border-gundam-blue;
+    @apply hover:scale-110;
+    height: 100px;
+    width: 180px;
+    transition: 100ms all;
 }
 
 .category-deck img {
-    @apply hover:mix-blend-overlay hover:blur-sm
+    @apply object-cover rounded-xl overflow-hidden border-2 border-gundam-blue;
+    height: 100%;
+    width: 100%;
+
 }
 
 .category-name {
-    @apply top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]
+    /*@apply top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%]
     absolute text-gundam-white opacity-0 group-hover:opacity-100 uppercase
-    group-hover:transition ease-in-out duration-150 group-hover:scale-150;
+    group-hover:transition ease-in-out duration-150 group-hover:scale-150;*/
+    @apply text-gundam-blue text-center mt-1;
+    transition: 200ms all 1s;
 }
 

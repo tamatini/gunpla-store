@@ -14,13 +14,13 @@
             </ul>
         </section>
         <section id="home-latest">
-            <h2 class="home-section-title">Nouveautés!</h2>
-            <ul class="product-deck">
+            <h2 class="home-section-title">Nouveautés !</h2>
+            <ul class="product-deck mb-10">
                 {% for latestProduct in latestProducts %}
                     {% include 'home/_productCard.html.twig' with {latestProduct: latestProduct} only %}
                 {% endfor %}
             </ul>
-            <a id="home-latest-link" href="{{ path('product_index') }}">Nos derniers arrivages <i class="fa-solid fa-arrow-right"></i></a>
+            <a id="home-latest-link" href="{{ path('product_index') }}">Tout voir</a>
         </section>
         {{ include('partials/informations.html.twig') }}
     </main>
