@@ -15,7 +15,7 @@
 }
 
 .admin-section {
-    @apply w-full
+    @apply w-full m-0 p-0
 }
 
 .admin-nav-subtitle {
@@ -31,11 +31,11 @@
 }
 
 .admin-panel-title {
-    @apply text-gundam-red;
+    @apply text-gundam-red mt-1;
 }
 
 .admin-panel {
-    @apply m-10;
+    @apply mx-10 p-0;
 }
 
 .admin-panel hr {
@@ -92,6 +92,10 @@
 
 .admin-panel-form {
     @apply text-sm w-full grid-cols-4 grid gap-2
+}
+
+.admin-panel-form section {
+    padding: 0;
 }
 
 .admin-panel-form section:first-child {

@@ -23,15 +23,27 @@
     font-weight: 700;
 }
 
+@font-face {
+    font-family: "Roboto-Regular";
+    src: url("../fonts/Roboto-Regular.ttf") format("opentype");
+    font-weight: normal;
+}
+
+@font-face {
+    font-family: "Montserrat-Bold";
+    src: url("../fonts/Montserrat-Bold.ttf") format("opentype");
+    font-weight: bold;
+}
+
 /* Global styles */
 body {
     @apply bg-gundam-white min-h-screen tracking-widest;
-    font-family: 'Plavsky', sans-serif;
-    font-weight: 400;
+    font-family: 'Roboto-Regular', sans-serif;
+    font-weight: normal;
 }
 
 p, span, a, th, td, label, input, textarea {
-    font-size: 10px;
+    font-size: 14px;
     letter-spacing: 0.1rem;
 }
 
@@ -45,6 +57,7 @@ label {
 }
 
 h1, h2, h3 {
+    font-family: "Montserrat-Bold", sans-serif;
     font-weight: 700;
     text-transform: uppercase;
 }
