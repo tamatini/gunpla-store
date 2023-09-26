@@ -24,7 +24,7 @@
 
 /* Global styles */
 body {
-    @apply bg-gundam-white min-h-screen tracking-widest;
+    @apply min-h-screen tracking-widest;
     font-family: 'Roboto-Regular', sans-serif;
     font-weight: normal;
 }
@@ -191,8 +191,9 @@ input, textarea {
 }
 
 .card-product {
-    @apply bg-gundam-white overflow-hidden border-2 rounded-xl
-    border-gundam-blue;
+    @apply overflow-hidden  rounded-xl bg-gundam-white shadow-md border-2
+    border-gundam-blue relative;
+    height: 400px;
 }
 
 .card-product-header {
@@ -200,7 +201,10 @@ input, textarea {
 }
 
 .card-product-thumbnail {
-    @apply hover:scale-110 hover:transition ease-in-out duration-150 w-full
+    @apply hover:scale-110 hover:transition ease-in-out duration-150 w-full;
+    height: 200px;
+    object-fit: cover;
+    object-position: top;
 }
 
 .card-product-content {
@@ -216,7 +220,7 @@ input, textarea {
 }
 
 .card-product-add-cart {
-    @apply text-center bg-gundam-blue text-gundam-white
+    @apply text-center bg-gundam-blue text-gundam-white absolute bottom-2 w-[90%] right-1/2 transform translate-x-1/2
     block text-base p-2 mt-4 hover:bg-gundam-red hover:text-gundam-yellow rounded-md
 }
 

@@ -23,10 +23,12 @@ class HomeController extends AbstractController
     {
         $latestProduct = $entityManager->getRepository(Product::class)->findLatestProduct(8);
         $categories = $entityManager->getRepository(Category::class)->homepageCategory(6);
+        $highGrades = $entityManager->getRepository(Product::class)->findByCategory("High Grade");
         return $this->render('home/index.html.twig', [
             'title' => 'Accueil',
             'latestProducts' => $latestProduct,
-            'categories' => $categories
+            'categories' => $categories,
+            'highGrades' => $highGrades
         ]);
     }
 }

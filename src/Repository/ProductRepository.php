@@ -51,6 +51,18 @@ class ProductRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function findByCategory(string $category):array
+    {
+        return $this->createQueryBuilder("p")
+            ->select('c', 'p')
+            ->join("p.category", "c")
+            ->where("c.name IN (:category)")
+            ->setParameter("category", $category)
+            ->setMaxResults(4)
+            ->getQuery()
+            ->getResult();
+    }
+
     /**
      * @return Product[]
      */
@@ -61,7 +73,7 @@ class ProductRepository extends ServiceEntityRepository
 
     /**
      * Return min and max price range depending on search query
-     * @param SearchData $search
+     * @param SearchData $searchData
      * @return int[]
      */
     public function findMinMax(SearchData $searchData): array

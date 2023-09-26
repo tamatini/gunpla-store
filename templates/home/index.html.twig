@@ -22,6 +22,16 @@
             </ul>
             <a id="home-latest-link" href="{{ path('product_index') }}">Tout voir</a>
         </section>
+        <section id="home-latest">
+            <h2 class="home-section-title">High Grade</h2>
+            <ul class="product-deck mb-10">
+                {% for highGrade in highGrades %}
+                    {% include 'home/_productCard.html.twig' with {latestProduct: highGrade} only %}
+                {% endfor %}
+            </ul>
+        </section>
+
+
         {{ include('partials/informations.html.twig') }}
     </main>
 {% endblock %}
